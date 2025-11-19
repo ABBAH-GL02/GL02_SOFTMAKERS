@@ -1,5 +1,5 @@
 const readline = require('readline');
-
+// readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d’afficher des sorties (output) dans le terminal
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -11,7 +11,7 @@ function demanderReponseUtilisateur(prompt) {
   });
 }
 
-async function mainMenu() {
+async function menuPrincipal() {
       console.log('---------------------------------------------------\n');
 while (true) {
     console.log('MENU PRINCIPAL');
@@ -79,7 +79,7 @@ function afficherAide() {
 }
 
 
-mainMenu().catch(err => {
+menuPrincipal().catch(err => {
   console.error('Erreur fatale :', err);
   rl.close();
   process.exit(1); //process.exit(1) indique que le programme s’est terminé avec une erreur.
