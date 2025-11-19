@@ -26,6 +26,6 @@
 
 ###
 
-<img align="right" height="50" src="https://image.noelshack.com/fichiers/2025/46/4/1763018890-capture-d-e-cran-2025-11-13-a-08-27-48.png"  />
+<img align="right" height="50" src="https://image.noelshack.com/fichiers/2025/46/4/1763018890-capture-d-e-cran-2025-11-13-a-08-27-48.png" />
 
 ###
