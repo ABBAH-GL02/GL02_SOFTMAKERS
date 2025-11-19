@@ -2,8 +2,21 @@
   "name": "gl02_softmakers",
   "version": "1.0.0",
   "description": "",
-  "main": "menu.js",
+  "main": "caporalCli.js",
   "scripts": {
-    "start": "node menu.js"
+    "start": "node menu.js",
+    "cli": "node caporalCli.js",
+    "test": "jasmine"
+  },
+  "dependencies": {
+    "@caporal/core": "^2.0.2",
+    "colors": "^1.4.0",
+    "prompt": "^1.2.0",
+    "vcards-js": "^2.10.0",
+    "vega": "^5.21.0",
+    "vega-lite": "^5.2.0"
+  },
+  "devDependencies": {
+    "jasmine": "^3.10.0"
   }
 }
