@@ -10,7 +10,7 @@
 
 ###
 
-<p align="left">ALLABERT Mathéo<br>WITLING Louis<br>BERNET Lilian<br>LE Remy<br>LE PELTIER SWAN</p>
+<p align="left">ALLABERT Mathéo<br>WITLING Louis<br>BERNET Lilian<br>LE Remy<br>LE PELTIER SWAN </p>
 
 ###
 
