@@ -29,3 +29,33 @@
 <img align="right" height="50" src="https://image.noelshack.com/fichiers/2025/46/4/1763018890-capture-d-e-cran-2025-11-13-a-08-27-48.png" />
 
 ###
+
+## Utilisation
+
+### Prérequis
+
+- [Node.js](https://nodejs.org/) doit être installé sur votre machine.
+
+### Installation
+
+Ouvrez un terminal dans le dossier du projet et installez les dépendances (s'il y en a) :
+
+```powershell
+npm install
+```
+
+### Lancer le menu principal
+
+Dans le terminal, exécutez :
+
+```powershell
+node menu.js
+```
+
+ou, si vous avez défini un script dans `package.json` :
+
+```powershell
+npm start
+```
+
+Le menu interactif s'affichera et vous pourrez naviguer avec les chiffres proposés.
