@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "caporalCli.js",
+  "type": "module",
   "scripts": {
     "start": "node menu.js",
     "cli": "node caporalCli.js",
