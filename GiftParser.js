@@ -71,7 +71,9 @@ export function parseGiftQuestion(block) {
             if (!p) continue;
             const correct = p.startsWith('=');
             let txt = p.replace(/^=+/, '').replace(/^~+/, '').replace(/^%?\d+%?/, '').trim();
-            out.push({ text: txt, correct });
+            if (txt) {
+                out.push({ text: txt, correct });
+            }
         }
         return out;
     }

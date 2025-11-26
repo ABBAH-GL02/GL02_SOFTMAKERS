@@ -80,15 +80,15 @@ async function verifierExamen() {
 }
 
 async function visualiserProfil() {
-  await actions.visualiserProfil();
+  await actions.visualiserProfil(rl);
 }
 
 async function simulerExamen() {
-  await actions.simulerExamen();
+  await actions.simulerExamen(rl);
 }
 
 async function comparerProfils() {
-  await actions.comparerProfils();
+  await actions.comparerProfils(rl);
 }
 
 async function afficherAide() {
