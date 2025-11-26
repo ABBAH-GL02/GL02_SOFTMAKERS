@@ -1,4 +1,4 @@
-module.exports = async function afficherAide() {
+export default async function afficherAide() {
   // Implémentation placeholder — remplacer par logique réelle
   console.log(
     "Équipe 🤝 SoftMakers\n\
@@ -9,3 +9,4 @@ module.exports = async function afficherAide() {
         LE PELTIER SWAN"
   );
 };
+

@@ -1,15 +1,13 @@
-const readline = require("readline");
+import readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 // readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d’afficher des sorties (output) dans le terminal
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: true,
-});
-const actions = require("./actions");
-function demanderReponseUtilisateur(prompt) {
-  return new Promise((resolve) => {
-    rl.question(prompt, (ans) => resolve(ans.trim()));
-  });
+const rl = readline.createInterface({ input, output, terminal: true });
+import * as actions from './actions/index.js';
+async function demanderReponseUtilisateur(prompt) {
+  const ans = await rl.question(prompt);
+  return ans?.trim();
 }
 
 async function menuPrincipal() {
@@ -66,11 +64,11 @@ async function menuPrincipal() {
 }
 
 async function chercherQuestions() {
-  await actions.chercherQuestions();
+  await actions.chercherQuestions(rl);
 }
 
 async function creerExamen() {
-  await actions.creerExamen();
+  await actions.creerExamen(rl);
 }
 
 async function genererVCard() {
@@ -97,15 +95,14 @@ async function afficherAide() {
   await actions.afficherAide();
 }
 
-module.exports = {
-  demanderReponseUtilisateur,
-  menuPrincipal,
-};
+export { demanderReponseUtilisateur, menuPrincipal };
 
-if (require.main === module) {
+import { fileURLToPath as _fileURLToPath } from 'node:url';
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   menuPrincipal().catch((err) => {
-    console.error("Erreur fatale :", err);
+    console.error('Erreur fatale :', err);
     rl.close();
-    process.exit(1); //process.exit(1) indique que le programme s’est terminé avec une erreur.
+    process.exit(1);
   });
 }

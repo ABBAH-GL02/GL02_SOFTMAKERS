@@ -61,18 +61,104 @@ export function parseGiftQuestion(block) {
         type = "multiplechoice";
     }
 
+    function parseChoiceParts(b) {
+        const out = [];
+        if (!b) return out;
+        let base = b.replace(/^\d+:[A-Za-z]+:/, '').trim();
+        const parts = base.split(/(?=[~=])/g);
+        for (let p of parts) {
+            p = p.trim();
+            if (!p) continue;
+            const correct = p.startsWith('=');
+            let txt = p.replace(/^=+/, '').replace(/^~+/, '').replace(/^%?\d+%?/, '').trim();
+            out.push({ text: txt, correct });
+        }
+        return out;
+    }
+
+    let choices = null;
+    let matchingPairs = null;
+
+    if (type === 'multiplechoice') {
+        choices = [];
+        rawAnswerBlocks.forEach(b => {
+            const c = parseChoiceParts(b);
+            choices.push(...c);
+        });
+    } else if (type === 'cloze') {
+        choices = rawAnswerBlocks.map((b) => parseChoiceParts(b));
+    } else if (type === 'truefalse') {
+        choices = [];
+        rawAnswerBlocks.forEach(b => {
+            const opt = b.trim().toUpperCase();
+            if (/^T|TRUE/.test(opt)) choices.push({ text: 'True', correct: true });
+            else if (/^F|FALSE/.test(opt)) choices.push({ text: 'False', correct: false });
+            else {
+                if (opt.includes('T')) choices.push({ text: 'True', correct: true });
+                if (opt.includes('F')) choices.push({ text: 'False', correct: true });
+            }
+        });
+    } else if (type === 'matching') {
+        matchingPairs = [];
+        rawAnswerBlocks.forEach(b => {
+            const pairs = b.split(/(?==)/g).map(s=>s.trim()).filter(Boolean);
+            pairs.forEach(p => {
+                const match = p.match(/^=([^->]+)->(.+)$/);
+                if (match) matchingPairs.push({ left: match[1].trim(), right: match[2].trim() });
+            });
+        });
+    }
+
+    function buildDisplay() {
+        let out = '';
+        out += `${title} [${type}]\n`;
+        out += `${text}\n`;
+
+        if (type === 'multiplechoice' && Array.isArray(choices)) {
+            const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            out += '\nOptions:\n';
+            choices.forEach((c, i) => {
+                const label = labels[i] || String(i+1);
+                const mark = c.correct ? ' (✓)' : '';
+                out += `${label}) ${c.text}${mark}\n`;
+            });
+        } else if (type === 'cloze' && Array.isArray(choices)) {
+            const labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            choices.forEach((blockChoices, bi) => {
+                out += `\nBlank ${bi+1}:\n`;
+                blockChoices.forEach((c, i) => {
+                    const label = labels[i] || String(i+1);
+                    const mark = c.correct ? ' (✓)' : '';
+                    out += `${label}) ${c.text}${mark}\n`;
+                });
+            });
+        } else if (type === 'truefalse' && Array.isArray(choices)) {
+            out += '\nTrue/False:\n';
+            choices.forEach((c) => {
+                const mark = c.correct ? ' (✓)' : '';
+                out += `${c.text}${mark}\n`;
+            });
+        } else if (type === 'matching' && Array.isArray(matchingPairs)) {
+            out += '\nMatching pairs:\n';
+            matchingPairs.forEach((p, i) => {
+                out += `${i+1}) ${p.left} -> ${p.right}\n`;
+            });
+        }
+
+        return out.trim();
+    }
+
+    const display = buildDisplay();
+
     return {
         title,
         text: text.trim(),
         answers: rawAnswerBlocks,
         correctAnswers,
         type,
-        raw
+        raw,
+        choices,
+        matchingPairs,
+        display
     };
 }
-
-const rawBlocks = readGiftFile("SujetB_data/EM-U4-p32_33-Review.gift");
-
-const questions = rawBlocks.map(parseGiftQuestion);
-
-console.log(questions[0]);
