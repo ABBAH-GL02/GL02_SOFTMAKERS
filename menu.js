@@ -76,7 +76,7 @@ async function genererVCard() {
 }
 
 async function verifierExamen() {
-  await actions.verifierExamen();
+  await actions.verifierExamen(rl);
 }
 
 async function visualiserProfil() {
