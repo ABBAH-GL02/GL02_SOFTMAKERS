@@ -22,7 +22,7 @@ export async function discoverSujetStructure(dataDir = path.join(process.cwd(), 
     const unitMatch = fname.match(/U\d+/i);
     const pageMatch = fname.match(/p\d+(?:_\d+)?/i);
     const unit = unitMatch ? unitMatch[0].toUpperCase() : 'UNKNOWN';
-    const page = pageMatch ? pageMatch[0].toLowerCase() : 'unknown';
+    const page = pageMatch ? pageMatch[0].toLowerCase() : 'pas de numéro de page. Taper 1';
 
     units[unit] = units[unit] || {};
     units[unit][page] = units[unit][page] || [];
@@ -39,6 +39,9 @@ export default async function chercherQuestions(rl = null) {
   try {
     files = await fs.readdir(dataDir);
   } catch (err) {
+    // Définir les couleurs une seule fois pour toute la fonction
+    const blue = '\x1b[34m';
+    const reset = '\x1b[0m';
     console.error("Le dossier SujetB_data est introuvable :", err.message);
     return;
   }
@@ -55,7 +58,7 @@ export default async function chercherQuestions(rl = null) {
     const unitMatch = fname.match(/U\d+/i);
     const pageMatch = fname.match(/p\d+(?:_\d+)?/i);
     const unit = unitMatch ? unitMatch[0].toUpperCase() : 'UNKNOWN';
-    const page = pageMatch ? pageMatch[0].toLowerCase() : 'unknown';
+    const page = pageMatch ? pageMatch[0].toLowerCase() : 'pas de numéro de page. Taper 1'; //'unknown'
 
     units[unit] = units[unit] || {};
     units[unit][page] = units[unit][page] || [];
@@ -75,7 +78,11 @@ export default async function chercherQuestions(rl = null) {
       console.log('\nUnités disponibles:');
       unitKeys.forEach((u, i) => console.log(`${i + 1}) ${u}`));
 
-      const unitChoice = await rl.question('\nNuméro d\'unité (ou q pour quitter): ');
+      // Affichage en bleu pour la ligne de saisie du numéro d'unité
+      const blue = '\x1b[34m';
+      const reset = '\x1b[0m';
+      const unitPrompt = `\nNuméro d'unité (ou q pour quitter):\n${blue}(exemple: taper l'index "2" pour accéder à l'unité \"${unitKeys[1]}\")${reset} `;
+      const unitChoice = await rl.question(unitPrompt);
       if (unitChoice.trim().toLowerCase() === 'q') return;
       const unitIdx = parseInt(unitChoice, 10) - 1;
       if (!(unitIdx >= 0 && unitIdx < unitKeys.length)) {
@@ -89,7 +96,13 @@ export default async function chercherQuestions(rl = null) {
       console.log(`\nPages disponibles pour ${chosenUnit}:`);
       pages.forEach((p, i) => console.log(`${i + 1}) ${p}`));
 
-      const pageChoice = await rl.question('\nNuméro de page (ou q pour quitter): ');
+      // Affichage en bleu pour l'exemple de sélection de page
+      
+      let pagePrompt = '\nNuméro de page (ou q pour quitter): ';
+      if (pages.length > 0) {
+        pagePrompt += `\n${blue}(exemple: taper l'index "1" pour accéder à la page "${pages[0]}")${reset} `;
+      }
+      const pageChoice = await rl.question(pagePrompt);
       if (pageChoice.trim().toLowerCase() === 'q') return;
       const pageIdx = parseInt(pageChoice, 10) - 1;
       if (!(pageIdx >= 0 && pageIdx < pages.length)) {
@@ -132,7 +145,12 @@ export default async function chercherQuestions(rl = null) {
         console.log(`${i + 1}) ${q.title}`);
       });
 
-      const qChoice = await rl.question('\nNuméro de question pour afficher (ou q pour quitter): ');
+      // Affichage en bleu pour l'exemple de sélection de question
+      let questionPrompt = '\nNuméro de question pour afficher (ou q pour quitter): ';
+      if (parsed.length > 0) {
+        questionPrompt += `\n${blue}(exemple: taper l'index "1" pour accéder à la question \"${parsed[0].title}\")${reset} `;
+      }
+      const qChoice = await rl.question(questionPrompt);
       if (qChoice.trim().toLowerCase() === 'q') return;
       const qIdx = parseInt(qChoice, 10) - 1;
       if (!(qIdx >= 0 && qIdx < parsed.length)) {

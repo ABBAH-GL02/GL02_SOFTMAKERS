@@ -34,7 +34,10 @@ export default async function creerExamen(rl = null) {
     ownRl = true;
   }
 
+
   try {
+    const blue = '\x1b[34m';
+    const reset = '\x1b[0m';
     const dataDir = path.join(process.cwd(), 'SujetB_data');
     const units = await discoverSujetStructure(dataDir);
     const unitKeys = Object.keys(units).sort();
@@ -46,7 +49,9 @@ export default async function creerExamen(rl = null) {
       console.log('\nUnités disponibles:');
       unitKeys.forEach((u, i) => console.log(`${i + 1}) ${u}`));
 
-      const unitChoice = await rl.question('\nNuméro d\'unité (ou q pour terminer la création): ');
+      // Prompt unité avec exemple bleu
+      const unitPrompt = `\nNuméro d'unité (ou q pour terminer la création):\n${blue}(exemple: taper l'index "1" pour accéder à l'unité \"${unitKeys[0]}\")${reset} `;
+      const unitChoice = await rl.question(unitPrompt);
       if (unitChoice.trim().toLowerCase() === 'q') break;
       const unitIdx = parseInt(unitChoice, 10) - 1;
       if (!(unitIdx >= 0 && unitIdx < unitKeys.length)) {
@@ -60,7 +65,12 @@ export default async function creerExamen(rl = null) {
       console.log(`\nPages disponibles pour ${chosenUnit}:`);
       pages.forEach((p, i) => console.log(`${i + 1}) ${p}`));
 
-      const pageChoice = await rl.question('\nNuméro de page (ou q pour terminer la création): ');
+      // Prompt page avec exemple bleu
+      let pagePrompt = '\nNuméro de page (ou q pour terminer la création): ';
+      if (pages.length > 0) {
+        pagePrompt += `\n${blue}(exemple: taper l'index "1" pour accéder à la page \"${pages[0]}\")${reset} `;
+      }
+      const pageChoice = await rl.question(pagePrompt);
       if (pageChoice.trim().toLowerCase() === 'q') break;
       const pageIdx = parseInt(pageChoice, 10) - 1;
       if (!(pageIdx >= 0 && pageIdx < pages.length)) {
@@ -98,7 +108,12 @@ export default async function creerExamen(rl = null) {
       console.log(`\nQuestions dans ${selectedFile}:`);
       parsed.forEach((q, i) => console.log(`${i + 1}) ${q.title}`));
 
-      const qChoice = await rl.question('\nNuméro de question à ajouter (ou a pour ajouter une plage, q pour terminer): ');
+      // Prompt question avec exemple bleu
+      let questionPrompt = '\nNuméro de question à ajouter (ou a pour ajouter une plage, q pour terminer): ';
+      if (parsed.length > 0) {
+        questionPrompt += `\n${blue}(exemple: taper l'index "1" pour ajouter la question \"${parsed[0].title}\")${reset} `;
+      }
+      const qChoice = await rl.question(questionPrompt);
       if (qChoice.trim().toLowerCase() === 'q') break;
       if (qChoice.trim().toLowerCase() === 'a') {
         const range = await rl.question('Entrez la plage (ex: 1-3) : ');
@@ -137,7 +152,7 @@ export default async function creerExamen(rl = null) {
 
       console.log(`\nNombre de questions sélectionnées : ${selectedBlocks.length}`);
 
-      const finish = await rl.question('Terminer la création maintenant ? (y=oui, n=continuer) : ');
+      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : \n${blue}votre examen doit avoir entre 15 et 20 questions uniques pour être valide${reset} `);
       if (finish.trim().toLowerCase() === 'y') break;
     }
 
@@ -150,8 +165,9 @@ export default async function creerExamen(rl = null) {
       await fs.writeFile(filename, content, 'utf8');
       console.log('Examen sauvegardé sous :', filename);
     } catch (e) {
-      console.error('\nErreur lors de la création de l\'examen :', e.message);
-      console.log('Assurez-vous d\'avoir entre 15 et 20 questions uniques. Vous pouvez relancer la création.');
+      const red = '\x1b[31m';
+      const reset = '\x1b[0m';
+      console.error(`\n${red}Erreur lors de la création de l'examen : ${e.message}\nAssurez-vous d'avoir entre 15 et 20 questions uniques. Vous pouvez relancer la création.${reset}`);
     }
 
   } finally {
