@@ -14,18 +14,53 @@ export default async function simulerExamen(rl = null) {
   }
 
   try {
-    const filePath = await rl.question('Entrez le chemin du fichier GIFT : ');
-    const absolutePath = path.resolve(filePath.trim());
-
+    const cwd = process.cwd();
+    const examsDir = path.join(cwd, 'examens');
+    let files;
     try {
-      await fs.access(absolutePath);
-    } catch {
-      console.error('Fichier introuvable.');
+      files = await fs.readdir(examsDir);
+    } catch (e) {
+      console.error("Le dossier 'examens' est introuvable. Créez-le ou sauvegardez un examen d'abord.");
       return;
     }
 
+    const giftFiles = files.filter(f => f.toLowerCase().endsWith('.gift'));
+    if (giftFiles.length === 0) {
+      console.log("Aucun fichier .gift trouvé dans ./examens.");
+      return;
+    }
+
+    console.log('\nFichiers d\'examen disponibles dans ./examens :');
+    giftFiles.forEach((f, i) => console.log(`${i + 1}) ${f}`));
+    const choice = await rl.question('\nNuméro du fichier à simuler (ou q pour quitter) : ');
+    if (choice.trim().toLowerCase() === 'q') return;
+    const index = parseInt(choice, 10) - 1;
+    if (!(index >= 0 && index < giftFiles.length)) {
+      console.error('Choix invalide.');
+      return;
+    }
+
+    const absolutePath = path.join(examsDir, giftFiles[index]);
     const blocks = readGiftFile(absolutePath);
-    const questions = blocks.map(parseGiftQuestion);
+    const parsed = blocks.map(parseGiftQuestion);
+
+    function isLikelyInstruction(q) {
+      if (!q || !q.text) return false;
+      const noAnswers = Array.isArray(q.answers) && q.answers.length === 0;
+      if (!noAnswers) return false;
+      const txt = (q.text || '').toLowerCase();
+      const title = (q.title || '').toLowerCase();
+      const keywords = ['complete', 'completez', 'complète', 'consigne', 'instruction', 'instructions', 'look carefully', 'read carefully', 'fill in', 'fill the', 'choose the', 'select the', 'complete the sentences', 'complete the text'];
+      const containsKeyword = keywords.some(k => txt.includes(k) || title.includes(k));
+      const tooLong = txt.length > 30;
+      return containsKeyword || tooLong;
+    }
+
+    const questions = [];
+    for (let i = 0; i < parsed.length; i++) {
+      if (isLikelyInstruction(parsed[i])) continue;
+      questions.push(parsed[i]);
+    }
 
     if (questions.length === 0) {
       console.log('Aucune question trouvée dans ce fichier.');
@@ -48,10 +83,10 @@ export default async function simulerExamen(rl = null) {
           q.choices.forEach((c, idx) => {
             console.log(`${idx + 1}) ${c.text}`);
           });
-          
+
           const answer = await rl.question('Votre réponse (numéro) : ');
           const choiceIdx = parseInt(answer.trim()) - 1;
-          
+
           if (choiceIdx >= 0 && choiceIdx < q.choices.length) {
             if (q.choices[choiceIdx].correct) {
               isCorrect = true;
@@ -74,12 +109,11 @@ export default async function simulerExamen(rl = null) {
              }
          }
       } else {
-        // Text, Cloze, etc.
         const answer = await rl.question('Votre réponse : ');
         if (q.correctAnswers && q.correctAnswers.length > 0) {
-            if (q.correctAnswers.some(ca => ca.toLowerCase() === answer.trim().toLowerCase())) {
-                isCorrect = true;
-            }
+          if (q.correctAnswers.some(ca => ca.toLowerCase() === answer.trim().toLowerCase())) {
+            isCorrect = true;
+          }
         }
       }
 
@@ -88,10 +122,25 @@ export default async function simulerExamen(rl = null) {
         score++;
       } else {
         console.log('❌ Incorrect.');
-        // Afficher la bonne réponse si possible
         if (q.type === 'multiplechoice' || q.type === 'truefalse') {
-            const correctChoice = q.choices.find(c => c.correct);
-            if (correctChoice) console.log(`La bonne réponse était : ${correctChoice.text}`);
+          console.log('\nRéponses possibles :');
+          q.choices.forEach((c, idx) => {
+            const marker = c.correct ? '✓' : ' ';
+            console.log(`${idx + 1}) ${c.text} ${marker}`);
+          });
+        } else if (q.type === 'matching') {
+          console.log('\nPaires attendues :');
+          if (q.matchingPairs && q.matchingPairs.length > 0) {
+            q.matchingPairs.forEach((p, idx) => {
+              console.log(`${idx + 1}) ${p.left} -> ${p.right}`);
+            });
+          }
+        } else {
+          // show all known correct answers for open/cloze/numeric
+          if (q.correctAnswers && q.correctAnswers.length > 0) {
+            console.log('\nRéponses acceptées :');
+            q.correctAnswers.forEach((a, idx) => console.log(`${idx + 1}) ${a}`));
+          }
         }
       }
     }

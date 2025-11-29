@@ -1,4 +1,4 @@
-import { readGiftFile } from '../GiftParser.js';
+import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
 import { composeExamFromBlocks } from '../actions/creerExamen.js';
 import fs from 'node:fs';
 
@@ -11,7 +11,10 @@ async function run() {
   for (const f of files) {
     const blocks = readGiftFile(`${dir}/${f}`);
     for (const b of blocks) {
-      if (!collected.includes(b.trim())) collected.push(b.trim());
+      const parsed = parseGiftQuestion(b);
+      if (Array.isArray(parsed.answers) && parsed.answers.length === 0) continue;
+      const raw = b.trim();
+      if (!collected.includes(raw)) collected.push(raw);
       if (collected.length >= 15) break;
     }
     if (collected.length >= 15) break;

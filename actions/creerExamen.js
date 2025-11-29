@@ -6,14 +6,28 @@ import { discoverSujetStructure } from './chercherQuestions.js';
 import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
 
 export function composeExamFromBlocks(blocks, options = {}) {
+  function isLikelyInstructionParsed(q) {
+    if (!q || !q.text) return false;
+    const noAnswers = Array.isArray(q.answers) && q.answers.length === 0;
+    if (!noAnswers) return false;
+    const txt = (q.text || '').toLowerCase();
+    const title = (q.title || '').toLowerCase();
+    const keywords = ['complete', 'completez', 'complète', 'consigne', 'instruction', 'instructions', 'look carefully', 'read carefully', 'fill in', 'fill the', 'choose the', 'select the', 'complete the sentences', 'complete the text'];
+    const containsKeyword = keywords.some(k => txt.includes(k) || title.includes(k));
+    const tooLong = txt.length > 30;
+    return containsKeyword || tooLong;
+  }
+
   const unique = [];
   const seen = new Set();
   for (const b of blocks) {
     const key = b.trim();
-    if (!seen.has(key)) {
-      unique.push(b.trim());
-      seen.add(key);
-    }
+    if (seen.has(key)) continue;
+    let parsed = null;
+    try { parsed = parseGiftQuestion(b); } catch (e) { parsed = null; }
+    if (isLikelyInstructionParsed(parsed)) continue;
+    unique.push(key);
+    seen.add(key);
   }
 
   const count = unique.length;
@@ -23,6 +37,17 @@ export function composeExamFromBlocks(blocks, options = {}) {
 
   const content = unique.map(b => b.trim()).join('\n\n');
   return content;
+}
+
+export async function saveExamToDir(content, filename = null, dirName = 'examens') {
+  const defaultName = `examen_${Date.now()}.gift`;
+  let outName = filename && filename.trim() ? filename.trim() : defaultName;
+  if (!outName.toLowerCase().endsWith('.gift')) outName += '.gift';
+  const outDir = path.join(process.cwd(), dirName);
+  await fs.mkdir(outDir, { recursive: true });
+  const outPath = path.join(outDir, outName);
+  await fs.writeFile(outPath, content, 'utf8');
+  return outPath;
 }
 
 export default async function creerExamen(rl = null) {
@@ -105,13 +130,38 @@ export default async function creerExamen(rl = null) {
       }
 
       const parsed = blocks.map(parseGiftQuestion);
-      console.log(`\nQuestions dans ${selectedFile}:`);
-      parsed.forEach((q, i) => console.log(`${i + 1}) ${q.title}`));
+
+      function isLikelyInstruction(q) {
+        if (!q || !q.text) return false;
+        const noAnswers = Array.isArray(q.answers) && q.answers.length === 0;
+        if (!noAnswers) return false;
+        const txt = (q.text || '').toLowerCase();
+        const title = (q.title || '').toLowerCase();
+        const keywords = ['complete', 'completez', 'complète', 'consigne', 'instruction', 'instructions', 'look carefully', 'read carefully', 'fill in', 'fill the', 'choose the', 'select the', 'complete the sentences', 'complete the text'];
+        const containsKeyword = keywords.some(k => txt.includes(k) || title.includes(k));
+        const tooLong = txt.length > 30;
+        return containsKeyword || tooLong;
+      }
+      function isZeroItem(q) {
+        if (!q || !q.title) return false;
+        return /\b\d+\.0\b/.test(q.title);
+      }
+
+      const displayList = [];
+      for (let i = 0; i < parsed.length; i++) {
+        const q = parsed[i];
+        if (isLikelyInstruction(q) || isZeroItem(q)) continue;
+        displayList.push({ displayIndex: displayList.length + 1, actualIndex: i, q });
+      }
+
+      console.log(`\nQuestions dans ${selectedFile} (les consignes .0 sont cachées) :`);
+      if (displayList.length === 0) console.log('Aucune question affichable (toutes les entrées semblent être des consignes).');
+      displayList.forEach(d => console.log(`${d.displayIndex}) ${d.q.title}`));
 
       // Prompt question avec exemple bleu
       let questionPrompt = '\nNuméro de question à ajouter (ou a pour ajouter une plage, q pour terminer): ';
-      if (parsed.length > 0) {
-        questionPrompt += `\n${blue}(exemple: taper l'index "1" pour ajouter la question \"${parsed[0].title}\")${reset} `;
+      if (displayList.length > 0) {
+        questionPrompt += `\n${blue}(exemple: taper l'index "1" pour ajouter la question "${displayList[0].q.title}")${reset} `;
       }
       const qChoice = await rl.question(questionPrompt);
       if (qChoice.trim().toLowerCase() === 'q') break;
@@ -124,24 +174,35 @@ export default async function creerExamen(rl = null) {
         }
         const start = parseInt(m[1], 10) - 1;
         const end = parseInt(m[2], 10) - 1;
-        if (start < 0 || end >= parsed.length || start > end) {
+        if (displayList.length === 0) {
+          console.log('Aucune question disponible à ajouter.');
+          continue;
+        }
+        if (start < 0 || end >= displayList.length || start > end) {
           console.log('Plage hors limites.');
           continue;
         }
-        for (let idx = start; idx <= end; idx++) {
-          const raw = blocks[idx].trim();
-          if (!selectedSet.has(raw)) {
-            selectedBlocks.push(raw);
-            selectedSet.add(raw);
+          for (let displayIdx = start; displayIdx <= end; displayIdx++) {
+            const actualIdx = displayList[displayIdx].actualIndex;
+            const parsedQ = parsed[actualIdx];
+            const raw = blocks[actualIdx].trim();
+            if (!selectedSet.has(raw)) {
+              selectedBlocks.push(raw);
+              selectedSet.add(raw);
+            }
           }
-        }
       } else {
         const idx = parseInt(qChoice, 10) - 1;
-        if (!(idx >= 0 && idx < parsed.length)) {
+        if (displayList.length === 0) {
+          console.log('Aucune question disponible à ajouter.');
+          continue;
+        }
+        if (!(idx >= 0 && idx < displayList.length)) {
           console.log('Choix de question invalide.');
           continue;
         }
-        const raw = blocks[idx].trim();
+        const actualIdx = displayList[idx].actualIndex;
+        const raw = blocks[actualIdx].trim();
         if (selectedSet.has(raw)) {
           console.log('Question déjà sélectionnée, elle sera ignorée.');
         } else {
@@ -162,8 +223,8 @@ export default async function creerExamen(rl = null) {
       const defaultName = `examen_${Date.now()}.gift`;
       const name = await rl.question(`Nom du fichier (ou Entrée pour ${defaultName}): `);
       const filename = (name && name.trim()) ? name.trim() : defaultName;
-      await fs.writeFile(filename, content, 'utf8');
-      console.log('Examen sauvegardé sous :', filename);
+      const outPath = await saveExamToDir(content, filename, 'examens');
+      console.log('Examen sauvegardé sous :', outPath);
     } catch (e) {
       const red = '\x1b[31m';
       const reset = '\x1b[0m';

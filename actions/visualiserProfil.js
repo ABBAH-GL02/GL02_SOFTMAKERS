@@ -14,25 +14,60 @@ export default async function visualiserProfil(rl = null) {
   }
 
   try {
-    const filePath = await rl.question('Entrez le chemin du fichier GIFT : ');
-    const absolutePath = path.resolve(filePath.trim());
-
+    const cwd = process.cwd();
+    const examsDir = path.join(cwd, 'examens');
+    let files;
     try {
-      await fs.access(absolutePath);
-    } catch {
-      console.error('Fichier introuvable.');
+      files = await fs.readdir(examsDir);
+    } catch (e) {
+      console.error("Le dossier 'examens' est introuvable. Créez-le ou sauvegardez un examen d'abord.");
       return;
     }
+
+    const giftFiles = files.filter(f => f.toLowerCase().endsWith('.gift'));
+    if (giftFiles.length === 0) {
+      console.log("Aucun fichier .gift trouvé dans ./examens.");
+      return;
+    }
+
+    console.log('\nFichiers d\'examen disponibles dans ./examens :');
+    giftFiles.forEach((f, i) => console.log(`${i + 1}) ${f}`));
+    const choice = await rl.question('\nNuméro du fichier à visualiser (ou q pour quitter) : ');
+    if (choice.trim().toLowerCase() === 'q') return;
+    const index = parseInt(choice, 10) - 1;
+    if (!(index >= 0 && index < giftFiles.length)) {
+      console.error('Choix invalide.');
+      return;
+    }
+    const absolutePath = path.join(examsDir, giftFiles[index]);
 
     const blocks = readGiftFile(absolutePath);
     const questions = blocks.map(parseGiftQuestion);
 
+    function isLikelyInstruction(q) {
+      if (!q || !q.text) return false;
+      const noAnswers = Array.isArray(q.answers) && q.answers.length === 0;
+      if (!noAnswers) return false;
+      const txt = (q.text || '').toLowerCase();
+      const title = (q.title || '').toLowerCase();
+      const keywords = ['complete', 'completez', 'complète', 'consigne', 'instruction', 'instructions', 'look carefully', 'read carefully', 'fill in', 'fill the', 'choose the', 'select the', 'complete the sentences', 'complete the text'];
+      const containsKeyword = keywords.some(k => txt.includes(k) || title.includes(k));
+      const tooLong = txt.length > 30;
+      return containsKeyword || tooLong;
+    }
+
+    const filtered = [];
+    for (let i = 0; i < questions.length; i++) {
+      if (isLikelyInstruction(questions[i])) continue;
+      filtered.push(questions[i]);
+    }
+
     const stats = {
-      total: questions.length,
+      total: filtered.length,
       types: {}
     };
 
-    questions.forEach(q => {
+    filtered.forEach(q => {
       stats.types[q.type] = (stats.types[q.type] || 0) + 1;
     });
 

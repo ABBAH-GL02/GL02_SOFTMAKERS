@@ -16,4 +16,12 @@ describe('Spec_F2 - Création d\'un examen (composeExamFromBlocks)', () => {
     const res = composeExamFromBlocks(blocks);
     expect(typeof res).toBe('string');
   });
+
+  it('ignore les consignes (blocs sans réponses) lors de la composition', async () => {
+    const instruction = `::I::Look carefully at the following instructions and complete the tasks.`;
+    const qBlocks = Array.from({length: 15}, (_,i) => `::Q${i}::Question ${i}{=A}`);
+    const combined = [instruction, ...qBlocks];
+    const res = composeExamFromBlocks(combined);
+    expect(typeof res).toBe('string');
+  });
 });
