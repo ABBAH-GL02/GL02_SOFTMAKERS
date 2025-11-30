@@ -13,29 +13,16 @@
     }
   },
   {
-    "id": "bernet",
-    "prenom": "Pierre",
-    "nom": "Dupont",
-    "email": "pierre.dupont@utt.fr",
-    "telephone": "0102030405",
+    "id": "test",
+    "prenom": "test",
+    "nom": "test",
+    "email": "test",
+    "telephone": "test",
     "adresse": {
-      "rue": "12 rue Marie Curie",
-      "ville": "Troyes",
-      "region": "Grand-Est",
-      "code_postal": "10000"
-    }
-  },
-  {
-    "id": "wittling",
-    "prenom": "Pierre",
-    "nom": "Dupont",
-    "email": "pierre.dupont@utt.fr",
-    "telephone": "0102030405",
-    "adresse": {
-      "rue": "12 rue Marie Curie",
-      "ville": "Troyes",
-      "region": "Grand-Est",
-      "code_postal": "10000"
+      "rue": "test",
+      "ville": "test",
+      "region": "test",
+      "codePostal": "test"
     }
   }
 ]
