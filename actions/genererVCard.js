@@ -14,7 +14,7 @@ export default async function genererVCard(rl = null) {
     }
 
     try {
-        const jsonFile = path.join(process.cwd(), "enseignants.json");
+        const jsonFile = path.join(process.cwd(), "actions", "enseignant.json");
 
         let enseignants = [];
         try {
