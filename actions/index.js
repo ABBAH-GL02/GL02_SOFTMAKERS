@@ -7,7 +7,7 @@ import visualiserProfil from './visualiserProfil.js';
 import simulerExamen from './simulerExamen.js';
 import comparerProfils from './comparerProfils.js';
 import afficherAide from './afficherAide.js';
-import menuLogin from './menuLogin.js';
+import menuLogin from '../menuLogin.js';
 
 export {
   chercherQuestions,

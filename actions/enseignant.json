@@ -2,6 +2,7 @@
   {
     "id": "1",
     "password": "1234",
+    "role": "enseignant",
     "prenom": "Pierre",
     "nom": "Dupont",
     "email": "pierre.dupont@utt.fr",

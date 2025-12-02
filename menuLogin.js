@@ -2,7 +2,6 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from 'node:url';
 
 export default async function menuLogin(rl = null) {
 
@@ -25,7 +24,7 @@ export default async function menuLogin(rl = null) {
 
         if (user) {
             console.log(`\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.`);
-            return user;
+            return user.role;
         } else {
             console.log("\nIdentifiant ou mot de passe incorrect.");
             return null;
