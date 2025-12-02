@@ -11,6 +11,8 @@ async function demanderReponseUtilisateur(prompt) {
 }
 
 async function menuPrincipal() {
+  const user = await menuLogin();
+
   console.log("---------------------------------------------------\n");
   while (true) {
     console.log("MENU PRINCIPAL");
@@ -61,6 +63,10 @@ async function menuPrincipal() {
     }
     console.log("\n---\n");
   }
+}
+
+async function menuLogin() {
+  await actions.menuLogin(rl);
 }
 
 async function chercherQuestions() {

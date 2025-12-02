@@ -1,6 +1,7 @@
 [
   {
-    "id": "dupont",
+    "id": "1",
+    "password": "1234",
     "prenom": "Pierre",
     "nom": "Dupont",
     "email": "pierre.dupont@utt.fr",
@@ -10,19 +11,6 @@
       "ville": "Troyes",
       "region": "Grand-Est",
       "code_postal": "10000"
-    }
-  },
-  {
-    "id": "test",
-    "prenom": "test",
-    "nom": "test",
-    "email": "test",
-    "telephone": "test",
-    "adresse": {
-      "rue": "test",
-      "ville": "test",
-      "region": "test",
-      "codePostal": "test"
     }
   }
 ]
