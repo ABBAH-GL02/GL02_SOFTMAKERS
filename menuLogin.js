@@ -17,7 +17,7 @@ export default async function menuLogin(rl = null) {
         const id = await rl.question("Identifiant : ");
         const password = await rl.question("Mot de passe : ");
 
-        const data = await fs.readFile(path.join(process.cwd(), "actions", "enseignant.json"), "utf-8");
+        const data = await fs.readFile(path.join(process.cwd(), "actions", "account.json"), "utf-8");
         const enseignants = JSON.parse(data);
 
         const user = enseignants.find(e => e.id === id && e.password === password);
