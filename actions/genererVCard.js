@@ -1,20 +1,21 @@
 import readline from "node:readline/promises";
-import {stdin as input, stdout as output} from "node:process";
+import { stdin as input, stdout as output } from "node:process";
 import path from "node:path";
 import fs from "node:fs/promises";
 import vCardJS from "vcards-js";
+import ajoutAccount from "./ajoutAccount.js";
 
 export default async function genererVCard(rl = null) {
     console.log("\n[actions] Génération d'un vCard...");
 
     let ownRl = false;
-    if (!rl){
+    if (!rl) {
         rl = readline.createInterface({ input, output });
         ownRl = true;
     }
 
     try {
-        const jsonFile = path.join(process.cwd(), "actions", "enseignant.json");
+        const jsonFile = path.join(process.cwd(), "actions", "account.json");
 
         let enseignants = [];
         try {
@@ -25,7 +26,9 @@ export default async function genererVCard(rl = null) {
             return;
         }
 
-        if(enseignants.length === 0){
+        enseignants = enseignants.filter(e => e.role === "enseignant");
+
+        if (enseignants.length === 0) {
             console.log("Aucun enseignant est trouvé dans le dossier courant.");
             return;
         }
@@ -42,49 +45,19 @@ export default async function genererVCard(rl = null) {
 
         const choice = await rl.question("\n Votre choix :");
 
-        if (choice.toLowerCase() === 'q'){
+        if (choice.toLowerCase() === 'q') {
             console.log("Vous quittez ce choix");
             return;
         }
 
-        if (choice.toLowerCase() === 'a'){
-            console.log("\n Ajout d'un enseignant : \n");
-
-            const id = await rl.question("Identifiant de l'enseignant : ");
-            const prenom = await rl.question("Prenom de l'enseignant : ");
-            const nom = await rl.question("Nom de l'enseignant : ");
-            const email = await rl.question("Email de l'enseignant : ");
-            const telephone = await rl.question("Telephone de l'enseignant : ");
-            const rue = await rl.question("Rue de l'enseignant : ");
-            const ville = await rl.question("Ville de l'enseignant : ");
-            const region = await rl.question("Region de l'enseignant : ");
-            const codePostal = await rl.question("Code postal de l'enseignant : ");
-
-            const newEnseignant = {
-                id,
-                prenom,
-                nom,
-                email,
-                telephone,
-                adresse: {
-                    rue,
-                    ville,
-                    region,
-                    codePostal
-                }
-            };
-
-            enseignants.push(newEnseignant);
-
-            await fs.writeFile(jsonFile, JSON.stringify(enseignants, null, 2), "utf8");
-
-            console.log("\n Le nouvel enseignant est enregistré");
+        if (choice.toLowerCase() === 'a') {
+            await ajoutAccount(rl);
             return;
         }
 
         const index = parseInt(choice, 10) - 1;
 
-        if (!(index >= 0 && index < enseignants.length)){
+        if (!(index >= 0 && index < enseignants.length)) {
             console.log("Choix invalide.");
         }
 
@@ -103,7 +76,7 @@ export default async function genererVCard(rl = null) {
         v.homeAddress.postalCode = selected.adresse.codePostal;
 
         const dir = path.join(process.cwd(), "vcards");
-        await fs.mkdir(dir, {recursive: true});
+        await fs.mkdir(dir, { recursive: true });
         const filePath = path.join(dir, `${selected.prenom}_${selected.nom}.vcf`);
 
         v.saveToFile(filePath);

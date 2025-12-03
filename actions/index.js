@@ -7,8 +7,9 @@ import visualiserProfil from './visualiserProfil.js';
 import simulerExamen from './simulerExamen.js';
 import comparerProfils from './comparerProfils.js';
 import afficherAide from './afficherAide.js';
+import menuLogin from '../menuLogin.js';
 
-export { 
+export {
   chercherQuestions,
   creerExamen,
   genererVCard,
@@ -17,6 +18,7 @@ export {
   simulerExamen,
   comparerProfils,
   afficherAide,
+  menuLogin,
 };
 
 export default {
@@ -28,4 +30,5 @@ export default {
   simulerExamen,
   comparerProfils,
   afficherAide,
+  menuLogin,
 };

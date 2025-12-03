@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "password": "1234",
+    "role": "enseignant",
+    "prenom": "Pierre",
+    "nom": "Dupont",
+    "email": "pierre.dupont@utt.fr",
+    "telephone": "0102030405",
+    "adresse": {
+      "rue": "12 rue Marie Curie",
+      "ville": "Troyes",
+      "region": "Grand-Est",
+      "code_postal": "10000"
+    }
+  },
+  {
+    "id": "2",
+    "password": "2345",
+    "role": "etudiant",
+    "prenom": "Jean",
+    "nom": "Dupont",
+    "email": "jean.dupont@utt.fr",
+    "telephone": "0102030406",
+    "adresse": {
+      "rue": "13 rue Marie Curie",
+      "ville": "Troyes",
+      "region": "Grand-Est",
+      "code_postal": "10000"
+    }
+  }
+]

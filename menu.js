@@ -11,56 +11,88 @@ async function demanderReponseUtilisateur(prompt) {
 }
 
 async function menuPrincipal() {
-  console.log("---------------------------------------------------\n");
-  while (true) {
-    console.log("MENU PRINCIPAL");
-    console.log("1) Rechercher et afficher des questions");
-    console.log("2) Créer un examen (GIFT))");
-    console.log("3) Générer un fichier VCard");
-    console.log("4) Vérifier la qualité d'un examen");
-    console.log(
-      "5) Visualiser le profil d'un examen (générer un fichier HTML)"
-    );
-    console.log("6) Simuler la passation d'un examen");
-    console.log("7) Comparer un profil d'examen");
-    console.log("8) Aide / Informations");
-    console.log("0) Quitter");
-    const choice = await demanderReponseUtilisateur("\nChoix > ");
+  const role = await menuLogin();
 
-    switch (choice) {
-      case "1":
-        await chercherQuestions();
-        break;
-      case "2":
-        await creerExamen();
-        break;
-      case "3":
-        await genererVCard();
-        break;
-      case "4":
-        await verifierExamen();
-        break;
-      case "5":
-        await visualiserProfil();
-        break;
-      case "6":
-        await simulerExamen();
-        break;
-      case "7":
-        await comparerProfils();
-        break;
-      case "8":
-        afficherAide();
-        break;
-      case "0":
-        console.log("Vous avez quitté le logiciel.");
-        rl.close();
-        process.exit(0);
-      default:
-        console.log("Commande inconnue. Tapez 8 pour l'aide.");
+  if (role == "enseignant") {
+    console.log("---------------------------------------------------\n");
+    while (true) {
+      console.log("MENU PRINCIPAL");
+      console.log("1) Rechercher et afficher des questions");
+      console.log("2) Créer un examen (GIFT))");
+      console.log("3) Générer un fichier VCard");
+      console.log("4) Vérifier la qualité d'un examen");
+      console.log("5) Visualiser le profil d'un examen (générer un fichier HTML)");
+      console.log("6) Comparer un profil d'examen");
+      console.log("7) Aide / Informations");
+      console.log("0) Quitter");
+      const choice = await demanderReponseUtilisateur("\nChoix > ");
+
+      switch (choice) {
+        case "1":
+          await chercherQuestions();
+          break;
+        case "2":
+          await creerExamen();
+          break;
+        case "3":
+          await genererVCard();
+          break;
+        case "4":
+          await verifierExamen();
+          break;
+        case "5":
+          await visualiserProfil();
+          break;
+        case "6":
+          await comparerProfils();
+          break;
+        case "7":
+          afficherAide();
+          break;
+        case "0":
+          console.log("Vous avez quitté le logiciel.");
+          rl.close();
+          process.exit(0);
+        default:
+          console.log("Commande inconnue. Tapez 8 pour l'aide.");
+      }
     }
     console.log("\n---\n");
   }
+  else if (role == "etudiant") {
+    console.log("---------------------------------------------------\n");
+    while (true) {
+      console.log("MENU PRINCIPAL");
+      console.log("1) Générer un fichier VCard");
+      console.log("2) Simuler la passation d'un examen");
+      console.log("3) Aide / Informations");
+      console.log("0) Quitter");
+      const choice = await demanderReponseUtilisateur("\nChoix > ");
+
+      switch (choice) {
+        case "1":
+          await genererVCard();
+          break;
+        case "2":
+          await simulerExamen();
+          break;
+        case "3":
+          afficherAide();
+          break;
+        case "0":
+          console.log("Vous avez quitté le logiciel.");
+          rl.close();
+          process.exit(0);
+        default:
+          console.log("Commande inconnue. Tapez 8 pour l'aide.");
+      }
+    }
+    console.log("\n---\n");
+  }
+}
+
+async function menuLogin() {
+  return await actions.menuLogin(rl);
 }
 
 async function chercherQuestions() {
