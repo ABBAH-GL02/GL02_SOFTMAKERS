@@ -78,7 +78,20 @@ export default async function simulerExamen(rl = null) {
 
       let isCorrect = false;
 
-      if (q.type === 'multiplechoice' || q.type === 'truefalse') {
+      // Vérifie si c'est une question avec réponse à taper (même si le type est multiplechoice)
+      // Si le texte contient des balises <b> avec des mots-clés, c'est probablement un cloze à taper
+      const hasHiddenChoices = q.text && q.text.includes('<b>') && q.text.includes('</b>');
+      
+      if (q.type === 'shortanswer' || q.type === 'cloze' || q.type === 'text' || hasHiddenChoices) {
+        // Questions ouvertes: demander la réponse SANS afficher les bonnes réponses d'avance
+        const answer = await rl.question('Votre réponse : ');
+        if (q.correctAnswers && q.correctAnswers.length > 0) {
+          if (q.correctAnswers.some(ca => ca.toLowerCase() === answer.trim().toLowerCase())) {
+            isCorrect = true;
+          }
+        }
+      } else if (q.type === 'multiplechoice') {
+        // Affiche les choix pour les QCM
         if (q.choices && q.choices.length > 0) {
           q.choices.forEach((c, idx) => {
             console.log(`${idx + 1}) ${c.text}`);
@@ -91,6 +104,19 @@ export default async function simulerExamen(rl = null) {
             if (q.choices[choiceIdx].correct) {
               isCorrect = true;
             }
+          }
+        }
+      } else if (q.type === 'truefalse') {
+        // Vrai/Faux
+        console.log('1) True');
+        console.log('2) False');
+
+        const answer = await rl.question('Votre réponse (1 ou 2) : ');
+        const choiceIdx = parseInt(answer.trim()) - 1;
+
+        if (choiceIdx >= 0 && choiceIdx < q.choices.length) {
+          if (q.choices[choiceIdx].correct) {
+            isCorrect = true;
           }
         }
       } else if (q.type === 'matching') {
@@ -109,6 +135,7 @@ export default async function simulerExamen(rl = null) {
              }
          }
       } else {
+        // Fallback pour autres types
         const answer = await rl.question('Votre réponse : ');
         if (q.correctAnswers && q.correctAnswers.length > 0) {
           if (q.correctAnswers.some(ca => ca.toLowerCase() === answer.trim().toLowerCase())) {
@@ -122,11 +149,19 @@ export default async function simulerExamen(rl = null) {
         score++;
       } else {
         console.log('❌ Incorrect.');
-        if (q.type === 'multiplechoice' || q.type === 'truefalse') {
+        const hasHiddenChoices = q.text && q.text.includes('<b>') && q.text.includes('</b>');
+        
+        if (q.type === 'multiplechoice' && !hasHiddenChoices) {
           console.log('\nRéponses possibles :');
           q.choices.forEach((c, idx) => {
             const marker = c.correct ? '✓' : ' ';
             console.log(`${idx + 1}) ${c.text} ${marker}`);
+          });
+        } else if (q.type === 'truefalse') {
+          console.log('\nRéponses correctes :');
+          q.choices.forEach((c) => {
+            const marker = c.correct ? '✓' : ' ';
+            console.log(`${c.text} ${marker}`);
           });
         } else if (q.type === 'matching') {
           console.log('\nPaires attendues :');
@@ -136,9 +171,9 @@ export default async function simulerExamen(rl = null) {
             });
           }
         } else {
-          // show all known correct answers for open/cloze/numeric
+          // Questions ouvertes, cloze, shortanswer: afficher les bonnes réponses seulement si incorrect
           if (q.correctAnswers && q.correctAnswers.length > 0) {
-            console.log('\nRéponses acceptées :');
+            console.log('\nBonne(s) réponse(s) :');
             q.correctAnswers.forEach((a, idx) => console.log(`${idx + 1}) ${a}`));
           }
         }

@@ -57,8 +57,12 @@ export function parseGiftQuestion(block) {
         type = "truefalse";
     } else if (rawAnswerBlocks.some(a => a.includes("SA:") || /^\d+:/.test(a))) {
         type = "cloze";
-    } else if (rawAnswerBlocks.some(a => a.includes("=") || a.includes("~"))) {
+    } else if (rawAnswerBlocks.some(a => a.includes("~"))) {
+        // Si distracteurs (~) présents, c'est un QCM
         type = "multiplechoice";
+    } else if (rawAnswerBlocks.some(a => a.includes("="))) {
+        // Si seulement = (sans ~), c'est une réponse ouverte à taper
+        type = "shortanswer";
     }
 
     function parseChoiceParts(b) {
