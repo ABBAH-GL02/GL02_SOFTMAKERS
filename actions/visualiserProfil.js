@@ -164,7 +164,14 @@ export default async function visualiserProfil(rl = null) {
 </html>
     `;
 
-    const outputPath = 'profil_examen.html';
+    const fileNameNoExt = path.parse(absolutePath).name;
+    const outputDir = path.join(cwd, 'profil_examen');
+    try {
+      await fs.mkdir(outputDir, { recursive: true });
+    } catch (e) {
+      // ignore if exists
+    }
+    const outputPath = path.join(outputDir, `profil_examen_${fileNameNoExt}.html`);
     await fs.writeFile(outputPath, htmlContent, 'utf8');
     console.log(`\nProfil généré avec succès : ${outputPath}`);
     console.log('Ouvrez ce fichier dans votre navigateur pour voir le rapport.');
