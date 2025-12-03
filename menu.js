@@ -72,7 +72,7 @@ async function creerExamen() {
 }
 
 async function genererVCard() {
-  await actions.genererVCard();
+  await actions.genererVCard(rl);
 }
 
 async function verifierExamen() {
