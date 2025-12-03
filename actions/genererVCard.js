@@ -3,6 +3,7 @@ import { stdin as input, stdout as output } from "node:process";
 import path from "node:path";
 import fs from "node:fs/promises";
 import vCardJS from "vcards-js";
+import ajoutAccount from "./ajoutAccount.js";
 
 export default async function genererVCard(rl = null) {
     console.log("\n[actions] Génération d'un vCard...");
@@ -50,37 +51,7 @@ export default async function genererVCard(rl = null) {
         }
 
         if (choice.toLowerCase() === 'a') {
-            console.log("\n Ajout d'un enseignant : \n");
-
-            const id = await rl.question("Identifiant de l'enseignant : ");
-            const prenom = await rl.question("Prenom de l'enseignant : ");
-            const nom = await rl.question("Nom de l'enseignant : ");
-            const email = await rl.question("Email de l'enseignant : ");
-            const telephone = await rl.question("Telephone de l'enseignant : ");
-            const rue = await rl.question("Rue de l'enseignant : ");
-            const ville = await rl.question("Ville de l'enseignant : ");
-            const region = await rl.question("Region de l'enseignant : ");
-            const codePostal = await rl.question("Code postal de l'enseignant : ");
-
-            const newEnseignant = {
-                id,
-                prenom,
-                nom,
-                email,
-                telephone,
-                adresse: {
-                    rue,
-                    ville,
-                    region,
-                    codePostal
-                }
-            };
-
-            enseignants.push(newEnseignant);
-
-            await fs.writeFile(jsonFile, JSON.stringify(enseignants, null, 2), "utf8");
-
-            console.log("\n Le nouvel enseignant est enregistré");
+            await ajoutAccount(rl);
             return;
         }
 
