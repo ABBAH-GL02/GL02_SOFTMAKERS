@@ -58,7 +58,7 @@ export default async function chercherQuestions(rl = null) {
     const unitMatch = fname.match(/U\d+/i);
     const pageMatch = fname.match(/p\d+(?:_\d+)?/i);
     const unit = unitMatch ? unitMatch[0].toUpperCase() : 'UNKNOWN';
-    const page = pageMatch ? pageMatch[0].toLowerCase() : 'pas de numéro de page. Taper 1'; //'unknown'
+    const page = pageMatch ? pageMatch[0].toLowerCase() : "pas de numéro de page (c'est normal car ce fichier n'en a pas, contrairement aux autres questions). Taper 1"; //'unknown'
 
     units[unit] = units[unit] || {};
     units[unit][page] = units[unit][page] || [];
