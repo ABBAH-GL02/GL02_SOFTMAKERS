@@ -2,6 +2,7 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import fs from "node:fs/promises";
 import path from "node:path";
+import inquirer from "inquirer";
 import ajoutAccount from "./actions/ajoutAccount.js";
 
 export default async function menuLogin(rl = null) {
@@ -17,23 +18,35 @@ export default async function menuLogin(rl = null) {
         console.log("LOGIN");
         console.log("1) Se connecter");
         console.log("2) Créer un compte");
+        console.log("0) Quitter");
         const choice = await rl.question("\nChoix > ");
 
         if (choice.toLowerCase() === '1') {
             const id = await rl.question("Identifiant : ");
-            const password = await rl.question("Mot de passe : ");
+            rl.pause();
+            const question = [
+                {
+                    type: "password",
+                    name: "password",
+                    message: "Mot de passe : ",
+                    mask: '*',
+                }
+            ];
 
+            const password = await inquirer.prompt(question);
+            rl.resume();
             const data = await fs.readFile(path.join(process.cwd(), "actions", "account.json"), "utf-8");
             const enseignants = JSON.parse(data);
 
-            const user = enseignants.find(e => e.id === id && e.password === password);
+            const user = enseignants.find(e => e.id === id && e.password === password.password);
+
 
             if (user) {
                 console.log(`\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.`);
                 return user.role;
             } else {
                 console.log("\nIdentifiant ou mot de passe incorrect.");
-                return null;
+                return menuLogin(rl);
             }
         }
         else if (choice.toLowerCase() === '2') {

@@ -24,7 +24,7 @@ async function menuPrincipal() {
       console.log("5) Visualiser le profil d'un examen (générer un fichier HTML)");
       console.log("6) Comparer un profil d'examen");
       console.log("7) Aide / Informations");
-      console.log("0) Quitter");
+      console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
       switch (choice) {
@@ -50,9 +50,8 @@ async function menuPrincipal() {
           afficherAide();
           break;
         case "0":
-          console.log("Vous avez quitté le logiciel.");
-          rl.close();
-          process.exit(0);
+          await menuLogin();
+          break;
         default:
           console.log("Commande inconnue. Tapez 7 pour l'aide.");
       }
