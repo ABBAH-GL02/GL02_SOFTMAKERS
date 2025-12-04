@@ -54,7 +54,7 @@ async function menuPrincipal() {
           rl.close();
           process.exit(0);
         default:
-          console.log("Commande inconnue. Tapez 8 pour l'aide.");
+          console.log("Commande inconnue. Tapez 7 pour l'aide.");
       }
     }
     console.log("\n---\n");
@@ -66,7 +66,7 @@ async function menuPrincipal() {
       console.log("1) Générer un fichier VCard");
       console.log("2) Simuler la passation d'un examen");
       console.log("3) Aide / Informations");
-      console.log("0) Quitter");
+      console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
       switch (choice) {
@@ -80,11 +80,10 @@ async function menuPrincipal() {
           afficherAide();
           break;
         case "0":
-          console.log("Vous avez quitté le logiciel.");
-          rl.close();
-          process.exit(0);
+          await menuLogin();
+          break;
         default:
-          console.log("Commande inconnue. Tapez 8 pour l'aide.");
+          console.log("Commande inconnue. Tapez 3 pour l'aide.");
       }
     }
     console.log("\n---\n");

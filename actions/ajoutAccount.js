@@ -19,7 +19,7 @@ export default async function ajoutAccount(rl = null) {
 
         const id = await rl.question("Identifiant : ");
         const password = await rl.question("Mot de passe : ");
-        const role = await rl.question("Role (enseignant/etudiant) : ");
+        const role = await demanderRole(rl);
         const prenom = await rl.question("Prenom : ");
         const nom = await rl.question("Nom : ");
         const email = await rl.question("Email : ");
@@ -55,6 +55,21 @@ export default async function ajoutAccount(rl = null) {
     } finally {
         if (ownRl && rl) {
             rl.close();
+        }
+    }
+}
+
+async function demanderRole(rl){
+    while (true){
+        const role = await rl.question("Role 1 : enseignant / Rôle 2 : etudiant) : ");
+        if (role === "1"){
+            return "enseignant";
+        }
+        else if (role === "2"){
+            return "etudiant";
+        }
+        else{
+            console.log("Veuillez entrer un nombre valide. 1 pour enseignant | 2 pour étudiant.");
         }
     }
 }

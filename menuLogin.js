@@ -40,6 +40,11 @@ export default async function menuLogin(rl = null) {
             await ajoutAccount(rl);
             return menuLogin(rl);
         }
+        else if (choice.toLowerCase() === '0') {
+            console.log("Vous avez quitté le logiciel.");
+            rl.close();
+            process.exit(0);
+        }
     } catch (err) {
         console.error("Erreur lors de la connexion :", err);
     } finally {
