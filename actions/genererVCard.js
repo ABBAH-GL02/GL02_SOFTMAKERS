@@ -35,7 +35,7 @@ export default async function genererVCard(rl = null) {
 
         console.log("\n Enseignants disponibles : \n");
         enseignants.forEach((e, i) =>
-            console.log(`${i + 1}) ${e.id}`)
+            console.log(`${i + 1}) ${e.prenom} ${e.nom}`)
         );
 
         console.log("\n Options : " +
