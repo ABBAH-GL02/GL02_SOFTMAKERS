@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
+import { exec } from 'node:child_process';
 
 export default async function visualiserProfil(rl = null) {
   console.log('\n[actions] Visualisation du profil d\'examen');
@@ -164,10 +165,26 @@ export default async function visualiserProfil(rl = null) {
 </html>
     `;
 
-    const outputPath = 'profil_examen.html';
+    const fileNameNoExt = path.parse(absolutePath).name;
+    const outputDir = path.join(cwd, 'profil_examen');
+    try {
+      await fs.mkdir(outputDir, { recursive: true });
+    } catch (e) {
+      // ignore if exists
+    }
+    const outputPath = path.join(outputDir, `profil_examen_${fileNameNoExt}.html`);
     await fs.writeFile(outputPath, htmlContent, 'utf8');
     console.log(`\nProfil généré avec succès : ${outputPath}`);
-    console.log('Ouvrez ce fichier dans votre navigateur pour voir le rapport.');
+    
+    // Convert path to file URL for clickable link
+    const fileUrl = new URL(`file:///${outputPath.replace(/\\/g, '/')}`).href;
+    console.log(`Lien cliquable : ${fileUrl}`);
+
+    // Ouvrir automatiquement dans le navigateur
+    const command = process.platform === 'win32' ? `start "" "${outputPath}"` : (process.platform === 'darwin' ? `open "${outputPath}"` : `xdg-open "${outputPath}"`);
+    exec(command, (error) => {
+      if (error) console.error(`Erreur lors de l'ouverture automatique : ${error.message}`);
+    });
 
   } catch (err) {
     console.error('Erreur :', err.message);

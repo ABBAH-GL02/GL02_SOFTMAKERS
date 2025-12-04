@@ -7,6 +7,10 @@ export default async function afficherAide() {
         BERNET Lilian\n\
         LE Remy\n\
         LE PELTIER SWAN"
+
+      //Syntaxe:  <i>Bounce</i> signifie que le mot "Bounce" est en italique.
+
   );
 };
+
 

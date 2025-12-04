@@ -88,7 +88,7 @@ export default async function verifierExamen(rl = null) {
           console.log(`Le fichier contient ${nb} questions. Il doit contenir entre 15 et 20 questions.`);
           valid = false;
       } else {
-          console.log(`Le fichier contient ${nb} questions. Il est valide.`);
+          console.log(`Le fichier contient ${nb} questions.`);
       }
 
       const seen = new Set();
