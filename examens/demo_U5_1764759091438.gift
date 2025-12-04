@@ -1,0 +1,25 @@
+::U5 p50 2.0 Text comprehension::Read the text above and choose the correct option.
+[OPTIONS:Read the text above and choose the correct option.]
+
+::U5 p50 2.1::The writer {~likes~=doesn’t} like chilli.
+[OPTIONS:like chilli.]
+
+::U5 p50 2.2::Chilli {~can be~=isn’t} very addictive.
+
+// Exercise 5: Short Answer
+[OPTIONS:very addictive.]
+
+::U5 p50 5.0 Expressions of quantity::Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.
+[OPTIONS:Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.]
+
+::U5 p50 5.1 very few::[html]<u>Very few people</u> {=not many people=hardly any people=only a few people=almost no-one}
+[OPTIONS:Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.]
+
+::U5 p50 5.2 not any::[html]<u>Does not seem to have any</u> addictive qualities {=has very few=has hardly any=has no}
+[OPTIONS:Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.]
+
+::U5 p50 5.3 a large quantity of::[html]<a>A large quantity of</u> {=a huge amount of=a great deal of=a lot of}
+[OPTIONS:Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.]
+
+::U5 p50 5.4 lots of::[html]<u>Lots</u> of our favourite dishes {=many=a large number}
+[OPTIONS:Look at the expressions of quantity from the text. Find at least one other way to say the same thing as the underlined word.]

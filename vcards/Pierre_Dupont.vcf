@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:Pierre Dupont
+N:Dupont;Pierre;;;
+EMAIL;type=HOME:pierre.dupont@utt.fr
+TEL;VALUE=uri;TYPE="voice,cell":tel:0102030405
+ADR;TYPE=HOME:;;12 rue Marie Curie;Troyes;;;Grand-Est
+REV:2025-12-03T16:09:56.458Z
+END:VCARD
