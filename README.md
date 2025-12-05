@@ -56,19 +56,19 @@ ou, si vous avez défini un script dans `package.json` :
 npm start
 ```
 
-### Login
+<h2>Login</h2>
 
 Une page de login vous demandera de vous connecter :
 
 <h4>Pour un professeur :</h4>
 
-<p>Identifiant : Pierre <br> Mot de passe : 1234</p>
+<p>Identifiant : pierre <br> Mot de passe : 1234</p>
 
 <h4>Pour un étudiant :</h4>
 
-<p>Identifiant : Jean <br> Mot de passe : 2345</p>
+<p>Identifiant : jean <br> Mot de passe : 2345</p>
 
-### Menu
+<h2>Menu</h2> 
 
 <p>Le menu interactif s'affichera et vous pourrez naviguer avec les chiffres proposés.</p>
 
