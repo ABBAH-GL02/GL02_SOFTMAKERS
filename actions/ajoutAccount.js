@@ -51,6 +51,9 @@ export default async function ajoutAccount(rl = null) {
         await fs.writeFile(jsonFile, JSON.stringify(accounts, null, 2), "utf8");
 
         console.log("\n Le nouveau compte est enregistré");
+        if (role === "enseignant") {
+            console.log(`${colors.blue}Vous devrez retaper "1" si vous souhaitez générer le fichier VCard du nouvel enseignant enregistré.${colors.reset}`);
+        }
     } catch (err) {
         console.error(`${colors.red}Erreur lors de l'ajout du compte :${colors.reset}`, err);
     } finally {

@@ -40,7 +40,7 @@ export default async function verifierExamen(rl = null) {
 
       const index = parseInt(choice, 10) - 1;
       if (!(index >= 0 && index < examFiles.length)){
-          console.log(`${colors.red}Choix invalide.${colors.reset}`);
+          console.log(`${colors.red}Choix invalide.${colors.reset} Tapez 7 pour l'aide.`);
           return;
       }
 

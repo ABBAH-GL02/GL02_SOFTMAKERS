@@ -118,5 +118,65 @@
       "region": "",
       "codePostal": ""
     }
+  },
+  {
+    "id": "e",
+    "password": "e",
+    "role": "etudiant",
+    "prenom": "e",
+    "nom": "e",
+    "email": "e",
+    "telephone": "e",
+    "adresse": {
+      "rue": "e",
+      "ville": "e",
+      "region": "e",
+      "codePostal": "e"
+    }
+  },
+  {
+    "id": "e",
+    "password": "e",
+    "role": "etudiant",
+    "prenom": "z",
+    "nom": "z",
+    "email": "z",
+    "telephone": "z",
+    "adresse": {
+      "rue": "z",
+      "ville": "z",
+      "region": "z",
+      "codePostal": "z"
+    }
+  },
+  {
+    "id": "e",
+    "password": "e",
+    "role": "etudiant",
+    "prenom": "e",
+    "nom": "e",
+    "email": "e",
+    "telephone": "ee",
+    "adresse": {
+      "rue": "e",
+      "ville": "e",
+      "region": "e",
+      "codePostal": "e"
+    }
+  },
+  {
+    "id": "e",
+    "password": "e",
+    "role": "enseignant",
+    "prenom": "e",
+    "nom": "e",
+    "email": "e",
+    "telephone": "e",
+    "adresse": {
+      "rue": "e",
+      "ville": "e",
+      "region": "e",
+      "codePostal": "e"
+    }
   }
 ]

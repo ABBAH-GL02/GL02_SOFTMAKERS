@@ -38,7 +38,7 @@ export default async function visualiserProfil(rl = null) {
     if (choice.trim().toLowerCase() === 'q') return;
     const index = parseInt(choice, 10) - 1;
     if (!(index >= 0 && index < giftFiles.length)) {
-      console.error(`${colors.red}Choix invalide.${colors.reset}`);
+      console.error(`${colors.red}Choix invalide.${colors.reset} Tapez 7 pour l'aide.`);
       return;
     }
     const absolutePath = path.join(examsDir, giftFiles[index]);
