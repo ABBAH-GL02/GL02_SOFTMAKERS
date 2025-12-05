@@ -12,7 +12,9 @@ async function demanderReponseUtilisateur(prompt) {
 }
 
 async function menuPrincipal() {
-  const role = await menuLogin();
+  const user = await menuLogin();
+  const role = user.role;
+  const userId = user.id;
 
   if (role == "enseignant") {
     console.log("---------------------------------------------------\n");
@@ -25,6 +27,7 @@ async function menuPrincipal() {
       console.log("5) Visualiser le profil d'un examen (générer un fichier HTML)");
       console.log("6) Comparer un profil d'examen");
       console.log("7) Aide / Informations");
+      console.log("8) Gérer mes informations personnelles");
       console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
@@ -50,6 +53,10 @@ async function menuPrincipal() {
         case "7":
           afficherAide();
           break;
+        case "8":
+          const resultEns = await gererInfosPersonnelles(userId);
+          if (resultEns === "ACCOUNT_DELETED") return;
+          break;
         case "0":
           await menuLogin();
           break;
@@ -66,6 +73,7 @@ async function menuPrincipal() {
       console.log("1) Générer un fichier VCard");
       console.log("2) Simuler la passation d'un examen");
       console.log("3) Aide / Informations");
+      console.log("4) Gérer mes informations personnelles");
       console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
@@ -78,6 +86,10 @@ async function menuPrincipal() {
           break;
         case "3":
           afficherAide();
+          break;
+        case "4":
+          const resultEtu = await gererInfosPersonnelles(userId);
+          if (resultEtu === "ACCOUNT_DELETED") return;
           break;
         case "0":
           await menuLogin();
@@ -126,14 +138,26 @@ async function afficherAide() {
   await actions.afficherAide();
 }
 
+async function gererInfosPersonnelles(userId) {
+  return await actions.gererInfosPersonnelles(rl, userId);
+}
+
 export { demanderReponseUtilisateur, menuPrincipal };
 
 import { fileURLToPath as _fileURLToPath } from 'node:url';
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  menuPrincipal().catch((err) => {
-    console.error('Erreur fatale :', err);
-    rl.close();
-    process.exit(1);
-  });
+  async function mainLoop() {
+    while (true) {
+      try {
+        await menuPrincipal();
+        // Si menuPrincipal retourne (déconnexion ou suppression compte), on boucle pour revenir au login
+      } catch (err) {
+        console.error('Erreur fatale :', err);
+        rl.close();
+        process.exit(1);
+      }
+    }
+  }
+  mainLoop();
 }

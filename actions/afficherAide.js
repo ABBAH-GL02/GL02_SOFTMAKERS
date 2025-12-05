@@ -12,8 +12,9 @@ Vérifiez que vous avez bien tapé un numéro et non une lettre ou un symbole.
 
 --- Fonctionnement des couleurs ---
 ${colors.green}VERT${colors.reset} : Messages de succès ou de validation
-${colors.red}ROUGE${colors.reset} : Messages d'erreur ou aucune réponse trouvée
+${colors.red}ROUGE${colors.reset} : Messages d'erreur, aucune réponse trouvée ou informations importantes
 ${colors.blue}BLEU${colors.reset} : Aide pour taper une requête ou exemples
+${colors.yellow}JAUNE${colors.reset} : Avertissement non critique
 `);
 };
 

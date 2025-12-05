@@ -45,7 +45,7 @@ export default async function menuLogin(rl = null) {
 
                 if (user) {
                     console.log(`${colors.green}\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.${colors.reset}`);
-                    return user.role;
+                    return user;
                 } else {
                     console.log(`${colors.red}\nIdentifiant ou mot de passe incorrect.${colors.reset}`);
                     return menuLogin(rl);

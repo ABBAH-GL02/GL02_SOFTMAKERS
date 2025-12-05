@@ -7,6 +7,7 @@ import visualiserProfil from './visualiserProfil.js';
 import simulerExamen from './simulerExamen.js';
 import comparerProfils from './comparerProfils.js';
 import afficherAide from './afficherAide.js';
+import gererInfosPersonnelles from './gererInfosPersonnelles.js';
 import menuLogin from '../menuLogin.js';
 
 export {
@@ -18,6 +19,7 @@ export {
   simulerExamen,
   comparerProfils,
   afficherAide,
+  gererInfosPersonnelles,
   menuLogin,
 };
 
