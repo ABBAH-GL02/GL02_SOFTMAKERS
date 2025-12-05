@@ -28,7 +28,7 @@
 
 ###
 
-## Utilisation
+<h2>👉 Utilisation</h2>
 
 ### Prérequis
 
@@ -56,7 +56,7 @@ ou, si vous avez défini un script dans `package.json` :
 npm start
 ```
 
-<h2>Login</h2>
+<h2>🔑 Login</h2>
 
 Une page de login vous demandera de vous connecter :
 
@@ -68,7 +68,7 @@ Une page de login vous demandera de vous connecter :
 
 <p>Identifiant : jean <br> Mot de passe : 2345</p>
 
-<h2>Menu</h2> 
+<h2>📝 Menu</h2> 
 
 <p>Le menu interactif s'affichera et vous pourrez naviguer avec les chiffres proposés.</p>
 
