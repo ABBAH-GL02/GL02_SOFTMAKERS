@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "pierre",
     "password": "1234",
     "role": "enseignant",
     "prenom": "Pierre",
@@ -15,7 +15,7 @@
     }
   },
   {
-    "id": "2",
+    "id": "jean",
     "password": "2345",
     "role": "etudiant",
     "prenom": "Jean",
@@ -27,156 +27,6 @@
       "ville": "Troyes",
       "region": "Grand-Est",
       "code_postal": "10000"
-    }
-  },
-  {
-    "id": "Matheo",
-    "password": "Math123$",
-    "role": "etudiant",
-    "prenom": "Matheo",
-    "nom": "Allabert",
-    "email": "matheo@lol.com",
-    "telephone": "00000000",
-    "adresse": {
-      "rue": "30 rue du lol",
-      "ville": "Loliville",
-      "region": "Lol",
-      "codePostal": "10000"
-    }
-  },
-  {
-    "id": "test_id",
-    "password": "test_mdp",
-    "role": "enseignant",
-    "prenom": "test_prenom",
-    "nom": "test_nom",
-    "email": "test@gmail.com",
-    "telephone": "ee",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "eleve",
-    "password": "eleve",
-    "role": "etudiant",
-    "prenom": "eleve",
-    "nom": "eleve",
-    "email": "el",
-    "telephone": "e",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "ea",
-    "password": "z",
-    "role": "etudiant",
-    "prenom": "e",
-    "nom": "e",
-    "email": "e",
-    "telephone": "e",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "ee",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "e",
-    "password": "e",
-    "role": "enseignant",
-    "prenom": "e",
-    "nom": "e",
-    "email": "e",
-    "telephone": "e",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "id",
-    "password": "mdp",
-    "role": "etudiant",
-    "prenom": "",
-    "nom": "",
-    "email": "",
-    "telephone": "",
-    "adresse": {
-      "rue": "",
-      "ville": "",
-      "region": "",
-      "codePostal": ""
-    }
-  },
-  {
-    "id": "e",
-    "password": "e",
-    "role": "etudiant",
-    "prenom": "e",
-    "nom": "e",
-    "email": "e",
-    "telephone": "e",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "e",
-    "password": "e",
-    "role": "etudiant",
-    "prenom": "z",
-    "nom": "z",
-    "email": "z",
-    "telephone": "z",
-    "adresse": {
-      "rue": "z",
-      "ville": "z",
-      "region": "z",
-      "codePostal": "z"
-    }
-  },
-  {
-    "id": "e",
-    "password": "e",
-    "role": "etudiant",
-    "prenom": "e",
-    "nom": "e",
-    "email": "e",
-    "telephone": "ee",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
-    }
-  },
-  {
-    "id": "e",
-    "password": "e",
-    "role": "enseignant",
-    "prenom": "e",
-    "nom": "e",
-    "email": "e",
-    "telephone": "e",
-    "adresse": {
-      "rue": "e",
-      "ville": "e",
-      "region": "e",
-      "codePostal": "e"
     }
   }
 ]
