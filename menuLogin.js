@@ -48,12 +48,12 @@ export default async function menuLogin(rl = null) {
                     return user;
                 } else {
                     console.log(`${colors.red}\nIdentifiant ou mot de passe incorrect.${colors.reset}`);
-                    return menuLogin(rl);
+                    continue;
                 }
             }
             else if (choice === '2') {
                 await ajoutAccount(rl);
-                return menuLogin(rl);
+                continue;
             }
             else if (choice === '0') {
                 console.log("Vous avez quitté le logiciel.");
