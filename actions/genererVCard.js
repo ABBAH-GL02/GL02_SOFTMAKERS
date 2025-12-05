@@ -69,6 +69,7 @@ export default async function genererVCard(rl = null) {
         v.firstName = selected.prenom;
         v.lastName = selected.nom;
         v.email = selected.email;
+        v.role = selected.role;
         v.cellPhone = selected.telephone;
         v.homeAddress.street = selected.adresse.rue;
         v.homeAddress.city = selected.adresse.ville;
