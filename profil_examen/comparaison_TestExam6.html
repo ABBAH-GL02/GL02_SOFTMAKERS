@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparaison de Profil</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; }
+        .card { background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; }
+        #vis { width: 100%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Rapport de Comparaison</h1>
+    
+    <div class="card">
+        <h2>Détails</h2>
+        <p><strong>Fichier analysé :</strong> TestExam6.gift</p>
+        <p><strong>Questions :</strong> 15</p>
+        <p><strong>Base de comparaison :</strong> 50 profils nationaux</p>
+    </div>
+
+    <div class="card">
+        <h2>Visualisation</h2>
+        <div id="vis"></div>
+    </div>
+
+    <script>
+        const spec = {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"Comparaison de Profil : Votre Examen vs Moyenne Nationale","width":400,"height":300,"data":{"values":[{"type":"shortanswer","category":"Votre Examen","value":53.333333333333336},{"type":"shortanswer","category":"Moyenne Banque","value":37.75205538355694},{"type":"QCM","category":"Votre Examen","value":46.666666666666664},{"type":"QCM","category":"Moyenne Banque","value":54.817595459236344},{"type":"Mot manquant","category":"Votre Examen","value":0},{"type":"Mot manquant","category":"Moyenne Banque","value":2.5541881664946677},{"type":"Association","category":"Votre Examen","value":0},{"type":"Association","category":"Moyenne Banque","value":3.498280013759889},{"type":"Inconnu","category":"Votre Examen","value":0},{"type":"Inconnu","category":"Moyenne Banque","value":1.2778809769521844},{"type":"V/F","category":"Votre Examen","value":0},{"type":"V/F","category":"Moyenne Banque","value":0.1}]},"mark":"bar","encoding":{"x":{"field":"type","axis":{"title":null,"labelAngle":-45}},"y":{"field":"value","type":"quantitative","axis":{"title":"Pourcentage (%)"}},"xOffset":{"field":"category"},"color":{"field":"category","scale":{"scheme":"category10"},"legend":{"title":"Légende"}},"tooltip":[{"field":"type","title":"Type"},{"field":"category","title":"Source"},{"field":"value","title":"Pourcentage","format":".1f"}]}};
+        vegaEmbed('#vis', spec).catch(console.error);
+    </script>
+</body>
+</html>
+    
