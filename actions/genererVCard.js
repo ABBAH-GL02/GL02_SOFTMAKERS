@@ -4,6 +4,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import vCardJS from "vcards-js";
 import ajoutAccount from "./ajoutAccount.js";
+import { colors } from '../utils/colors.js';
 
 export default async function genererVCard(rl = null) {
     console.log("\n[actions] Génération d'un vCard...");
@@ -58,7 +59,7 @@ export default async function genererVCard(rl = null) {
         const index = parseInt(choice, 10) - 1;
 
         if (!(index >= 0 && index < enseignants.length)) {
-            console.log("Choix invalide.");
+            console.log(`${colors.red}Choix invalide.${colors.reset} Tapez 7 pour l'aide (enseignant) ou 3 pour l'aide (étudiant).`);
         }
 
         const selected = enseignants[index];

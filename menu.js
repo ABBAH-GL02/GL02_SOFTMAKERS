@@ -2,7 +2,8 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-// readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d’afficher des sorties (output) dans le terminal
+import { colors } from './utils/colors.js';
+// readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d'afficher des sorties (output) dans le terminal
 const rl = readline.createInterface({ input, output, terminal: true });
 import * as actions from './actions/index.js';
 async function demanderReponseUtilisateur(prompt) {
@@ -11,7 +12,9 @@ async function demanderReponseUtilisateur(prompt) {
 }
 
 async function menuPrincipal() {
-  const role = await menuLogin();
+  const user = await menuLogin();
+  const role = user.role;
+  const userId = user.id;
 
   if (role == "enseignant") {
     console.log("---------------------------------------------------\n");
@@ -24,6 +27,7 @@ async function menuPrincipal() {
       console.log("5) Visualiser le profil d'un examen (générer un fichier HTML)");
       console.log("6) Comparer un profil d'examen");
       console.log("7) Aide / Informations");
+      console.log("8) Gérer mes informations personnelles");
       console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
@@ -49,11 +53,15 @@ async function menuPrincipal() {
         case "7":
           afficherAide();
           break;
+        case "8":
+          const resultEns = await gererInfosPersonnelles(userId);
+          if (resultEns === "ACCOUNT_DELETED") return;
+          break;
         case "0":
           await menuLogin();
           break;
         default:
-          console.log("Commande inconnue. Tapez 7 pour l'aide.");
+          console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 7 pour l'aide.`);
       }
     }
     console.log("\n---\n");
@@ -65,6 +73,7 @@ async function menuPrincipal() {
       console.log("1) Générer un fichier VCard");
       console.log("2) Simuler la passation d'un examen");
       console.log("3) Aide / Informations");
+      console.log("4) Gérer mes informations personnelles");
       console.log("0) Retourner au login");
       const choice = await demanderReponseUtilisateur("\nChoix > ");
 
@@ -78,11 +87,15 @@ async function menuPrincipal() {
         case "3":
           afficherAide();
           break;
+        case "4":
+          const resultEtu = await gererInfosPersonnelles(userId);
+          if (resultEtu === "ACCOUNT_DELETED") return;
+          break;
         case "0":
           await menuLogin();
           break;
         default:
-          console.log("Commande inconnue. Tapez 3 pour l'aide.");
+          console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 3 pour l'aide.`);
       }
     }
     console.log("\n---\n");
@@ -125,14 +138,26 @@ async function afficherAide() {
   await actions.afficherAide();
 }
 
+async function gererInfosPersonnelles(userId) {
+  return await actions.gererInfosPersonnelles(rl, userId);
+}
+
 export { demanderReponseUtilisateur, menuPrincipal };
 
 import { fileURLToPath as _fileURLToPath } from 'node:url';
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  menuPrincipal().catch((err) => {
-    console.error('Erreur fatale :', err);
-    rl.close();
-    process.exit(1);
-  });
+  async function mainLoop() {
+    while (true) {
+      try {
+        await menuPrincipal();
+        // Si menuPrincipal retourne (déconnexion ou suppression compte), on boucle pour revenir au login
+      } catch (err) {
+        console.error('Erreur fatale :', err);
+        rl.close();
+        process.exit(1);
+      }
+    }
+  }
+  mainLoop();
 }

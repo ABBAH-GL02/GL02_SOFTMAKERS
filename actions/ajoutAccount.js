@@ -2,6 +2,7 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import path from "node:path";
 import fs from "node:fs/promises";
+import { colors } from '../utils/colors.js';
 
 export default async function ajoutAccount(rl = null) {
     console.log("\n Ajout d'un compte : \n");
@@ -49,9 +50,12 @@ export default async function ajoutAccount(rl = null) {
 
         await fs.writeFile(jsonFile, JSON.stringify(accounts, null, 2), "utf8");
 
-        console.log("\n Le nouvel compte est enregistré");
+        console.log("\n Le nouveau compte est enregistré");
+        if (role === "enseignant") {
+            console.log(`${colors.blue}Vous devrez retaper "1" si vous souhaitez générer le fichier VCard du nouvel enseignant enregistré.${colors.reset}`);
+        }
     } catch (err) {
-        console.error("Erreur lors de l'ajout du compte :", err);
+        console.error(`${colors.red}Erreur lors de l'ajout du compte :${colors.reset}`, err);
     } finally {
         if (ownRl && rl) {
             rl.close();
@@ -61,7 +65,7 @@ export default async function ajoutAccount(rl = null) {
 
 async function demanderRole(rl){
     while (true){
-        const role = await rl.question("Role 1 : enseignant / Rôle 2 : etudiant) : ");
+        const role = await rl.question(`Role 1 : enseignant / Rôle 2 : etudiant) :\n${colors.blue}(taper "1" si vous êtes enseignant, taper "2" si vous êtes étudiant)${colors.reset} `);
         if (role === "1"){
             return "enseignant";
         }
@@ -69,7 +73,7 @@ async function demanderRole(rl){
             return "etudiant";
         }
         else{
-            console.log("Veuillez entrer un nombre valide. 1 pour enseignant | 2 pour étudiant.");
+            console.log(`${colors.red}Veuillez entrer un nombre valide. 1 pour enseignant | 2 pour étudiant.${colors.reset}`);
         }
     }
 }

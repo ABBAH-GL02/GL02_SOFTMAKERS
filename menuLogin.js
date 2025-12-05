@@ -4,6 +4,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import inquirer from "inquirer";
 import ajoutAccount from "./actions/ajoutAccount.js";
+import { colors } from "./utils/colors.js";
 
 export default async function menuLogin(rl = null) {
 
@@ -43,10 +44,10 @@ export default async function menuLogin(rl = null) {
 
 
                 if (user) {
-                    console.log(`\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.`);
-                    return user.role;
+                    console.log(`${colors.green}\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.${colors.reset}`);
+                    return user;
                 } else {
-                    console.log("\nIdentifiant ou mot de passe incorrect.");
+                    console.log(`${colors.red}\nIdentifiant ou mot de passe incorrect.${colors.reset}`);
                     return menuLogin(rl);
                 }
             }

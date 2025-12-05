@@ -1,16 +1,21 @@
+import { colors } from '../utils/colors.js';
+
 export default async function afficherAide() {
-  // Implémentation placeholder — remplacer par logique réelle
-  console.log(
-    "Équipe 🤝 SoftMakers\n\
-        ALLABERT Mathéo\n\
-        WITLING Louis\n\
-        BERNET Lilian\n\
-        LE Remy\n\
-        LE PELTIER SWAN"
+  console.log(`
+=== MESSAGE D'AIDE ===
 
-      //Syntaxe:  <i>Bounce</i> signifie que le mot "Bounce" est en italique.
+Si vous êtes sur l'aide, c'est que vous avez probablement tapé une commande inconnue.
 
-  );
+Notre menu utilise principalement les numéros entre 0 et 9 (et la lettre q pour 'quitter').
+
+Vérifiez que vous avez bien tapé un numéro et non une lettre ou un symbole.
+
+--- Fonctionnement des couleurs ---
+${colors.green}VERT${colors.reset} : Messages de succès ou de validation
+${colors.red}ROUGE${colors.reset} : Messages d'erreur, aucune réponse trouvée ou informations importantes
+${colors.blue}BLEU${colors.reset} : Aide pour taper une requête ou exemples
+${colors.yellow}JAUNE${colors.reset} : Avertissement non critique
+`);
 };
 
 

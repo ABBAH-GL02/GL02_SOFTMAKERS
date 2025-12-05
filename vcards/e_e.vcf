@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:e e
+N:e;e;;;
+EMAIL;type=HOME:e
+TEL;VALUE=uri;TYPE="voice,cell":tel:e
+ADR;TYPE=HOME:;;e;e;;e;e
+REV:2025-12-05T13:00:47.915Z
+END:VCARD
