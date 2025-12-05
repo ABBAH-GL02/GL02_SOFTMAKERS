@@ -61,7 +61,6 @@ export default async function verifierExamen(rl = null) {
                     return;
             }
 
-            // filter out instruction-like blocks (consignes) so counts/dup checks match how exams are composed
             function isLikelyInstruction(q) {
                 if (!q || !q.text) return false;
                 const noAnswers = Array.isArray(q.answers) && q.answers.length === 0;

@@ -170,13 +170,11 @@ export default async function visualiserProfil(rl = null) {
     try {
       await fs.mkdir(outputDir, { recursive: true });
     } catch (e) {
-      // ignore if exists
     }
     const outputPath = path.join(outputDir, `profil_examen_${fileNameNoExt}.html`);
     await fs.writeFile(outputPath, htmlContent, 'utf8');
     console.log(`\nProfil généré avec succès : ${outputPath}`);
     
-    // Convert path to file URL for clickable link
     const fileUrl = new URL(`file:///${outputPath.replace(/\\/g, '/')}`).href;
     console.log(`Lien cliquable : ${fileUrl}`);
 

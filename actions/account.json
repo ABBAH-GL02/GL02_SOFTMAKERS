@@ -28,5 +28,20 @@
       "region": "Grand-Est",
       "code_postal": "10000"
     }
+  },
+  {
+    "id": "Matheo",
+    "password": "Math123$",
+    "role": "etudiant",
+    "prenom": "Matheo",
+    "nom": "Allabert",
+    "email": "matheo@lol.com",
+    "telephone": "00000000",
+    "adresse": {
+      "rue": "30 rue du lol",
+      "ville": "Loliville",
+      "region": "Lol",
+      "codePostal": "10000"
+    }
   }
 ]
