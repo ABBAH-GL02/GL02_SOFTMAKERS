@@ -58,8 +58,7 @@ async function menuPrincipal() {
           if (resultEns === "ACCOUNT_DELETED") return;
           break;
         case "0":
-          await menuLogin();
-          break;
+          return;
         default:
           console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 7 pour l'aide.`);
       }
@@ -92,8 +91,7 @@ async function menuPrincipal() {
           if (resultEtu === "ACCOUNT_DELETED") return;
           break;
         case "0":
-          await menuLogin();
-          break;
+          return;
         default:
           console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 3 pour l'aide.`);
       }
