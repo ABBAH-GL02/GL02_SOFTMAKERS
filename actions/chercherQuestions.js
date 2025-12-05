@@ -3,6 +3,7 @@ import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
+import { colors } from '../utils/colors.js';
 export async function discoverSujetStructure(dataDir = path.join(process.cwd(), 'SujetB_data')) {
   let files;
   try {
@@ -34,20 +35,20 @@ export async function discoverSujetStructure(dataDir = path.join(process.cwd(), 
 
 export default async function chercherQuestions(rl = null) {
   const dataDir = path.join(process.cwd(), 'SujetB_data');
-  const blue = '\x1b[34m';
-  const reset = '\x1b[0m';
+  const blue = colors.blue;
+  const reset = colors.reset;
 
   let files;
   try {
     files = await fs.readdir(dataDir);
   } catch (err) {
-    console.error("Le dossier SujetB_data est introuvable :", err.message);
+    console.error(`${colors.red}Le dossier SujetB_data est introuvable :${colors.reset}`, err.message);
     return;
   }
 
   const giftFiles = files.filter((f) => f.toLowerCase().endsWith('.gift'));
   if (giftFiles.length === 0) {
-    console.log("Aucun fichier .gift trouvé dans SujetB_data.");
+    console.log(`${colors.red}Aucun fichier .gift trouvé dans SujetB_data.${colors.reset}`);
     return;
   }
 
@@ -60,13 +61,13 @@ export default async function chercherQuestions(rl = null) {
   try {
     while (true) {
       // Demander le mot-clé de recherche
-      const keywordPrompt = `\n${blue}Entrez un mot-clé pour rechercher (ou q pour quitter):${reset} `;
+      const keywordPrompt = `\nEntrez un mot-clé pour rechercher (ou q pour quitter):\n${blue}(exemple: taper "question")${reset} `;
       const keyword = await rl.question(keywordPrompt);
       
       if (keyword.trim().toLowerCase() === 'q') return;
       
       if (keyword.trim() === '') {
-        console.log('Veuillez entrer un mot-clé valide.');
+        console.log(`${colors.red}Veuillez entrer un mot-clé valide.${colors.reset}`);
         continue;
       }
 
@@ -95,7 +96,7 @@ export default async function chercherQuestions(rl = null) {
       }
 
       if (matchedQuestions.length === 0) {
-        console.log(`\nAucune question trouvée contenant "${keyword}".`);
+        console.log(`${colors.red}\nAucune question trouvée contenant "${keyword}".${colors.reset} Tapez un autre mot-clé.`);
         continue;
       }
 
@@ -106,14 +107,14 @@ export default async function chercherQuestions(rl = null) {
       });
 
       // Demander le numéro de la question à afficher
-      let questionPrompt = '\nNuméro de question pour afficher (ou q pour nouvelle recherche): ';
+      let questionPrompt = `\nNuméro de question pour afficher (ou q pour nouvelle recherche):\n${blue}(exemple: taper "1")${reset} `;
       const qChoice = await rl.question(questionPrompt);
       
       if (qChoice.trim().toLowerCase() === 'q') continue;
       
       const qIdx = parseInt(qChoice, 10) - 1;
       if (!(qIdx >= 0 && qIdx < matchedQuestions.length)) {
-        console.log('Choix de question invalide.');
+        console.log(`${colors.red}Choix de question invalide.${colors.reset}`);
         continue;
       }
 

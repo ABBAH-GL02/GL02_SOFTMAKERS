@@ -4,6 +4,7 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
 import { exec } from 'node:child_process';
+import { colors } from '../utils/colors.js';
 
 export default async function visualiserProfil(rl = null) {
   console.log('\n[actions] Visualisation du profil d\'examen');
@@ -21,13 +22,13 @@ export default async function visualiserProfil(rl = null) {
     try {
       files = await fs.readdir(examsDir);
     } catch (e) {
-      console.error("Le dossier 'examens' est introuvable. Créez-le ou sauvegardez un examen d'abord.");
+      console.error(`${colors.red}Le dossier 'examens' est introuvable. Créez-le ou sauvegardez un examen d'abord.${colors.reset}`);
       return;
     }
 
     const giftFiles = files.filter(f => f.toLowerCase().endsWith('.gift'));
     if (giftFiles.length === 0) {
-      console.log("Aucun fichier .gift trouvé dans ./examens.");
+      console.log(`${colors.red}Aucun fichier .gift trouvé dans ./examens.${colors.reset}`);
       return;
     }
 
@@ -37,7 +38,7 @@ export default async function visualiserProfil(rl = null) {
     if (choice.trim().toLowerCase() === 'q') return;
     const index = parseInt(choice, 10) - 1;
     if (!(index >= 0 && index < giftFiles.length)) {
-      console.error('Choix invalide.');
+      console.error(`${colors.red}Choix invalide.${colors.reset}`);
       return;
     }
     const absolutePath = path.join(examsDir, giftFiles[index]);

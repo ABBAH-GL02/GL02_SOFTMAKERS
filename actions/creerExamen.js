@@ -4,6 +4,7 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { discoverSujetStructure } from './chercherQuestions.js';
 import { readGiftFile, parseGiftQuestion } from '../GiftParser.js';
+import { colors } from '../utils/colors.js';
 
 export function composeExamFromBlocks(blocks, options = {}) {
   function isLikelyInstructionParsed(q) {
@@ -61,8 +62,8 @@ export default async function creerExamen(rl = null) {
 
 
   try {
-    const blue = '\x1b[34m';
-    const reset = '\x1b[0m';
+    const blue = colors.blue;
+    const reset = colors.reset;
     const dataDir = path.join(process.cwd(), 'SujetB_data');
     const units = await discoverSujetStructure(dataDir);
     const unitKeys = Object.keys(units).sort();
@@ -80,7 +81,7 @@ export default async function creerExamen(rl = null) {
       if (unitChoice.trim().toLowerCase() === 'q') break;
       const unitIdx = parseInt(unitChoice, 10) - 1;
       if (!(unitIdx >= 0 && unitIdx < unitKeys.length)) {
-        console.log('Choix d\'unité invalide.');
+        console.log(`${colors.red}Choix d\'unité invalide.${colors.reset}`);
         continue;
       }
 
@@ -99,7 +100,7 @@ export default async function creerExamen(rl = null) {
       if (pageChoice.trim().toLowerCase() === 'q') break;
       const pageIdx = parseInt(pageChoice, 10) - 1;
       if (!(pageIdx >= 0 && pageIdx < pages.length)) {
-        console.log('Choix de page invalide.');
+        console.log(`${colors.red}Choix de page invalide.${colors.reset}`);
         continue;
       }
 
@@ -116,7 +117,7 @@ export default async function creerExamen(rl = null) {
         if (fileChoice.trim().toLowerCase() === 'q') break;
         const fileIdx = parseInt(fileChoice, 10) - 1;
         if (!(fileIdx >= 0 && fileIdx < filesForPage.length)) {
-          console.log('Choix de fichier invalide.');
+          console.log(`${colors.red}Choix de fichier invalide.${colors.reset}`);
           continue;
         }
         selectedFile = filesForPage[fileIdx];
@@ -125,7 +126,7 @@ export default async function creerExamen(rl = null) {
       const fullPath = path.join(dataDir, selectedFile);
       const blocks = readGiftFile(fullPath);
       if (!blocks || blocks.length === 0) {
-        console.log('Aucune question trouvée dans le fichier sélectionné.');
+        console.log(`${colors.red}Aucune question trouvée dans le fichier sélectionné.${colors.reset}`);
         continue;
       }
 
@@ -155,7 +156,7 @@ export default async function creerExamen(rl = null) {
       }
 
       console.log(`\nQuestions dans ${selectedFile} (les consignes .0 sont cachées) :`);
-      if (displayList.length === 0) console.log('Aucune question affichable (toutes les entrées semblent être des consignes).');
+      if (displayList.length === 0) console.log(`${colors.red}Aucune question affichable (toutes les entrées semblent être des consignes).${colors.reset}`);
       displayList.forEach(d => console.log(`${d.displayIndex}) ${d.q.title}`));
 
       // Prompt question avec exemple bleu
@@ -169,17 +170,17 @@ export default async function creerExamen(rl = null) {
         const range = await rl.question('Entrez la plage (ex: 1-3) : ');
         const m = range.match(/^(\d+)\s*-\s*(\d+)$/);
         if (!m) {
-          console.log('Plage invalide.');
+          console.log(`${colors.red}Plage invalide.${colors.reset}`);
           continue;
         }
         const start = parseInt(m[1], 10) - 1;
         const end = parseInt(m[2], 10) - 1;
         if (displayList.length === 0) {
-          console.log('Aucune question disponible à ajouter.');
+          console.log(`${colors.red}Aucune question disponible à ajouter.${colors.reset}`);
           continue;
         }
         if (start < 0 || end >= displayList.length || start > end) {
-          console.log('Plage hors limites.');
+          console.log(`${colors.red}Plage hors limites.${colors.reset}`);
           continue;
         }
           for (let displayIdx = start; displayIdx <= end; displayIdx++) {
@@ -194,11 +195,11 @@ export default async function creerExamen(rl = null) {
       } else {
         const idx = parseInt(qChoice, 10) - 1;
         if (displayList.length === 0) {
-          console.log('Aucune question disponible à ajouter.');
+          console.log(`${colors.red}Aucune question disponible à ajouter.${colors.reset}`);
           continue;
         }
         if (!(idx >= 0 && idx < displayList.length)) {
-          console.log('Choix de question invalide.');
+          console.log(`${colors.red}Choix de question invalide.${colors.reset}`);
           continue;
         }
         const actualIdx = displayList[idx].actualIndex;
@@ -226,8 +227,8 @@ export default async function creerExamen(rl = null) {
       const outPath = await saveExamToDir(content, filename, 'examens');
       console.log('Examen sauvegardé sous :', outPath);
     } catch (e) {
-      const red = '\x1b[31m';
-      const reset = '\x1b[0m';
+      const red = colors.red;
+      const reset = colors.reset;
       console.error(`\n${red}Erreur lors de la création de l'examen : ${e.message}\nAssurez-vous d'avoir entre 15 et 20 questions uniques. Vous pouvez relancer la création.${reset}`);
     }
 

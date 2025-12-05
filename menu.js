@@ -2,7 +2,8 @@ import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-// readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d’afficher des sorties (output) dans le terminal
+import { colors } from './utils/colors.js';
+// readline est une bibliothèque intégrée à Node.js qui permet de lire des entrées (input) et d'afficher des sorties (output) dans le terminal
 const rl = readline.createInterface({ input, output, terminal: true });
 import * as actions from './actions/index.js';
 async function demanderReponseUtilisateur(prompt) {
@@ -53,7 +54,7 @@ async function menuPrincipal() {
           await menuLogin();
           break;
         default:
-          console.log("Commande inconnue. Tapez 7 pour l'aide.");
+          console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 7 pour l'aide.`);
       }
     }
     console.log("\n---\n");
@@ -82,7 +83,7 @@ async function menuPrincipal() {
           await menuLogin();
           break;
         default:
-          console.log("Commande inconnue. Tapez 3 pour l'aide.");
+          console.log(`${colors.red}Commande inconnue.${colors.reset} Tapez 3 pour l'aide.`);
       }
     }
     console.log("\n---\n");
