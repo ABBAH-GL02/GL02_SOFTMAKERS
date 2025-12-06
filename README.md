@@ -50,7 +50,7 @@ Dans le terminal, exécutez :
 node menu.js
 ```
 
-ou, si vous avez défini un script dans `package.json` :
+ou :
 
 ```powershell
 npm start
