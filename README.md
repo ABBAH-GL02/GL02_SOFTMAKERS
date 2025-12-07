@@ -12,7 +12,7 @@
 
 <img height="50" src="https://image.noelshack.com/fichiers/2025/46/4/1763018890-capture-d-e-cran-2025-11-13-a-08-27-48.png" />
 
-<p align="left">ALLABERT Mathéo<br>WITLING Louis<br>BERNET Lilian<br>LE Remy<br>LE PELTIER SWAN</p>
+<p align="left">ALLABERT Mathéo<br>WITLING Louis<br>BERNET Lilian<br>LE Remy<br>LE PELTIER Swan</p>
 
 ###
 
@@ -79,6 +79,18 @@ Une page de login vous demandera de vous connecter :
 3) Générer un fichier VCard
 4) Vérifier la qualité d'un examen
 5) Visualiser le profil d'un examen (générer un fichier HTML)
-6) Comparer un profil d'examen
-7) Aide / Informations
+6) Simuler la passation d'un examen
+7) Comparer un profil d'examen
+8) Aide / Informations
+9) Gérer les informations personnelles
 0) Retourner au login
+
+<h2>📔 Différences avec le CDC</h2> 
+
+<p align="left"><strong>SPEC F2</strong>: Pour une navigation plus simple, on sélectionne les questions par unité, puis par page puis par numéro.
+  <br><strong>SPEC F5</strong>: Pour une meilleure visibilité, la présentation statistique est différente.
+  <br><strong>SPEC F7</strong>: Pour une meilleure visibilité, la présentation statistique est différente.
+</p>
+
+
+
