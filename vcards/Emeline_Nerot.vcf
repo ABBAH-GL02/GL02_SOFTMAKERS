@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:Emeline Ner
+N:Ner;Emeline;;;
+EMAIL;type=HOME:emeline.ner@utt.fr
+TEL;VALUE=uri;TYPE="voice,cell":tel:0943826144
+ADR;TYPE=HOME:;;Le Foyer;3;;10000;Aube
+ROLE:enseignant
+REV:2025-12-10T16:18:59.229Z
+END:VCARD

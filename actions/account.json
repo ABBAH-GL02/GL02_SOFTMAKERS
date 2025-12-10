@@ -28,5 +28,20 @@
       "region": "Grand-Est",
       "code_postal": "10000"
     }
+  },
+  {
+    "id": "Emeline",
+    "password": "12345",
+    "role": "enseignant",
+    "prenom": "Emeline",
+    "nom": "Nerot",
+    "email": "emeline.nerot@utt.fr",
+    "telephone": "0943826144",
+    "adresse": {
+      "rue": "Le Foyer",
+      "ville": "3",
+      "region": "Aube",
+      "codePostal": "10000"
+    }
   }
 ]
