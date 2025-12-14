@@ -67,21 +67,33 @@ export default async function genererVCard(rl = null) {
 
         const v = vCardJS();
         v.version = "4.0";
+        // Remplir les informations de la vCard
+        // FN & N :
         v.firstName = selected.prenom;
         v.lastName = selected.nom;
+        // EMAIL
         v.email = selected.email;
         v.role = selected.role;
+        // TEL : 
         v.cellPhone = selected.telephone;
+        // ADR : 
         v.homeAddress.street = selected.adresse.rue;
         v.homeAddress.city = selected.adresse.ville;
-        v.homeAddress.countryRegion = selected.adresse.region;
-        v.homeAddress.postalCode = selected.adresse.codePostal;
+        v.homeAddress.stateProvince  = selected.adresse.region; // state = région
+        v.homeAddress.postalCode = selected.adresse.code_postal; // mauvais nom de champs du json
+        v.homeAddress.countryRegion = selected.adresse.pays; // region country = pays
+
+        // Formattage post lib vcards-js
+        let content = v.getFormattedString();
+        content = content
+        .replace(/^N:([^;\n]+);([^;\n]+);{2,}/m, "N:$1;$2")
+        .replace(/^ADR;TYPE=HOME:;;([^;\n]+);([^;\n]+);([^;\n]+);([^;\n]+);([^;\n]+)/m,"ADR;TYPE=HOME:$1;$2;$3;$4;$5");
 
         const dir = path.join(process.cwd(), "vcards");
         await fs.mkdir(dir, { recursive: true });
         const filePath = path.join(dir, `${selected.prenom}_${selected.nom}.vcf`);
 
-        v.saveToFile(filePath);
+        await fs.writeFile(filePath, content, "utf8");
         console.log(`\n Fichier enregistré dans ${filePath}`);
 
     } finally {

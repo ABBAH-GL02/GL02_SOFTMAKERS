@@ -11,7 +11,8 @@
       "rue": "12 rue Marie Curie",
       "ville": "Troyes",
       "region": "Grand-Est",
-      "code_postal": "10000"
+      "code_postal": "10000",
+      "pays": "France"
     }
   },
   {
@@ -26,7 +27,24 @@
       "rue": "13 rue Marie Curie",
       "ville": "Troyes",
       "region": "Grand-Est",
-      "code_postal": "10000"
+      "code_postal": "10000",
+      "pays": "France"
+    }
+  },
+  {
+    "id": "test",
+    "password": "123",
+    "role": "enseignant",
+    "prenom": "prenomtest",
+    "nom": "nomdetest",
+    "email": "test.test@gmail.fr",
+    "telephone": "1234567891",
+    "adresse": {
+      "rue": "12 rue test",
+      "ville": "Testville",
+      "region": "Testregion",
+      "code_postal": "12345",
+      "pays": "France"
     }
   }
 ]
