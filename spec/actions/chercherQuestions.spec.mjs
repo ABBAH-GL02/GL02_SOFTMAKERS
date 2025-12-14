@@ -1,4 +1,4 @@
-import { discoverSujetStructure } from '../actions/chercherQuestions.js';
+import { discoverSujetStructure } from "../../actions/chercherQuestions.js";
 
 describe('Spec_F1 - Recherche et affichage de questions (structure SujetB_data)', () => {
   it('devrait découvrir les unités et pages présentes dans SujetB_data', async () => {

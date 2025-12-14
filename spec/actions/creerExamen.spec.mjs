@@ -1,4 +1,4 @@
-import { composeExamFromBlocks } from '../actions/creerExamen.js';
+import { composeExamFromBlocks } from "../../actions/creerExamen.js";
 
 describe('Spec_F2 - Création d\'un examen (composeExamFromBlocks)', () => {
   it('rejette moins de 15 questions', async () => {
