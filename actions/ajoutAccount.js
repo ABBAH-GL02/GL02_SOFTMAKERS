@@ -3,6 +3,7 @@ import { stdin as input, stdout as output } from "node:process";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { colors } from '../utils/colors.js';
+import {hashPassword} from './passwordManager.js';
 
 export default async function ajoutAccount(rl = null) {
     console.log("\n Ajout d'un compte : \n");
@@ -19,7 +20,7 @@ export default async function ajoutAccount(rl = null) {
         const accounts = JSON.parse(data);
 
         const id = await rl.question("Identifiant : ");
-        const password = await rl.question("Mot de passe : ");
+        const password = await hashPassword(await rl.question("Mot de passe : "));
         const role = await demanderRole(rl);
         const prenom = await rl.question("Prenom : ");
         const nom = await rl.question("Nom : ");
