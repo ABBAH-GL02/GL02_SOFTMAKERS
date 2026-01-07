@@ -18,6 +18,7 @@ export default async function visualiserProfil(rl = null) {
   }
 
   try {
+    // 1. Select Exam File
     const cwd = process.cwd();
     const examsDir = path.join(cwd, 'examens');
     let files;
@@ -45,9 +46,10 @@ export default async function visualiserProfil(rl = null) {
     }
     const absolutePath = path.join(examsDir, giftFiles[index]);
 
+
+    // 2. Calculate Stats**Maybe le problème est là
     const blocks = readGiftFile(absolutePath);
     const questions = blocks.map(parseGiftQuestion);
-
     const stats = calculateExamStats(questions);
 
     const data = [];
