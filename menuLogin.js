@@ -16,53 +16,68 @@ export default async function menuLogin(rl = null) {
 
     try {
         while (true) {
-            console.log("\n---------------------------------------------------\n");
-            console.log("LOGIN");
-            console.log("1) Se connecter");
-            console.log("2) Créer un compte");
-            console.log("0) Quitter");
-            const choice = await rl.question("\nChoix > ");
+            try {
+                console.log("\n---------------------------------------------------\n");
+                console.log("LOGIN");
+                console.log("1) Se connecter");
+                console.log("2) Créer un compte");
+                console.log("0) Quitter");
+                const choice = await rl.question("\nChoix > ");
 
-            if (choice === '1') {
-                const id = await rl.question("Identifiant : ");
-                rl.pause();
-                const question = [
-                    {
-                        type: "password",
-                        name: "password",
-                        message: "Mot de passe : ",
-                        mask: '*',
+                if (choice === '1') {
+                    const id = await rl.question("Identifiant : ");
+                    rl.pause();
+                    const question = [
+                        {
+                            type: "password",
+                            name: "password",
+                            message: "Mot de passe : ",
+                            mask: '*',
+                        }
+                    ];
+
+                    const password = await inquirer.prompt(question);
+                    rl.resume();
+
+                    let data;
+                    try {
+                        data = await fs.readFile(path.join(process.cwd(), "actions", "account.json"), "utf-8");
+                    } catch (readErr) {
+                        if (readErr.code === 'ENOENT') {
+                            console.error(`${colors.red}\nErreur : Fichier de comptes introuvable (actions/account.json).${colors.reset}`);
+                            console.error("Veuillez contacter l'administrateur ou créer un nouveau compte si possible.");
+                            continue;
+                        } else {
+                            throw readErr;
+                        }
                     }
-                ];
 
-                const password = await inquirer.prompt(question);
-                rl.resume();
-                const data = await fs.readFile(path.join(process.cwd(), "actions", "account.json"), "utf-8");
-                const enseignants = JSON.parse(data);
+                    const enseignants = JSON.parse(data);
 
-                const user = enseignants.find(e => e.id === id && e.password === password.password);
+                    const user = enseignants.find(e => e.id === id && e.password === password.password);
 
 
-                if (user) {
-                    console.log(`${colors.green}\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.${colors.reset}`);
-                    return user;
-                } else {
-                    console.log(`${colors.red}\nIdentifiant ou mot de passe incorrect.${colors.reset}`);
+                    if (user) {
+                        console.log(`${colors.green}\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.${colors.reset}`);
+                        return user;
+                    } else {
+                        console.log(`${colors.red}\nIdentifiant ou mot de passe incorrect.${colors.reset}`);
+                        continue;
+                    }
+                }
+                else if (choice === '2') {
+                    await ajoutAccount(rl);
                     continue;
                 }
-            }
-            else if (choice === '2') {
-                await ajoutAccount(rl);
-                continue;
-            }
-            else if (choice === '0') {
-                console.log("Vous avez quitté le logiciel.");
-                rl.close();
-                process.exit(0);
+                else if (choice === '0') {
+                    console.log("Vous avez quitté le logiciel.");
+                    rl.close();
+                    process.exit(0);
+                }
+            } catch (err) {
+                console.error("Erreur lors de la connexion :", err);
             }
         }
-    } catch (err) {
-        console.error("Erreur lors de la connexion :", err);
     } finally {
         if (ownRl && rl) {
             rl.close();
