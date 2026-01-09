@@ -92,5 +92,47 @@ Une page de login vous demandera de vous connecter :
   <br><strong>SPEC F7</strong>: Pour une meilleure visibilité, la présentation statistique est différente.
 </p>
 
+###  Maintenance & suivi des issues
+
+- Fix
+Issue #1 – Tests Jasmine non effectués
+
+Issue #2 – Gestion des droits conforme au CDC
+
+Issue #3 – Gestion des erreurs fatales VCard
+
+Issue #4 – Graphiques de profils erronés
+
+Issue #5 – Format VCard erroné (;;;;;)
+
+Issue #6 – Regex dans le format VCard
+
+Issue #7 – Création d'examen : gestion des erreurs de validation
+
+
+- Enhancements
+
+Issue #8 – Création d'examen : visualisation des questions sélectionnées
+
+Issue #9 – Protection des données personnelles (mots de passe)
+
+Issue #10 – Création d'examen : suppression de questions sélectionnées
+
+###
+
+Répartition des tâches
+
+Membre	Issues attribuées
+Héléna Chevalier	#1, #5 (wiki)
+Sacha Himber	#2, #9
+Jules Andrea	#3, #6
+Fadi-Farhat	#7, #8
+Emeline Nerot	#4, #10
+
+
+### Licence
+
+Ce projet est distribué sous licence MIT.
+Vous êtes libre de l’utiliser, le modifier et le redistribuer à des fins pédagogiques ou personnelles, sous réserve de conserver la mention de copyright.
 
 
