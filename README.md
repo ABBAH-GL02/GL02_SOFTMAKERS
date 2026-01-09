@@ -123,17 +123,25 @@ Issue #10 – Création d'examen : suppression de questions sélectionnées
 
 Répartition des tâches
 
-Membre	Issues attribuées
-Héléna Chevalier	#1, #5 (wiki)
-Sacha Himber	#2, #9
-Jules Andrea	#3, #6
-Fadi-Farhat	#7, #8
-Emeline Nerot	#4, #10
+Membre	Issues attribuées :
+
+- Héléna Chevalier	#1, #5 (wiki)
+- Sacha Himber	#2, #9
+- Jules Andrea Timadji	#3, #6
+- Fadi Farhat	#7, #8
+- Emeline Nerot	#4, #10
 
 
 ### Licence
 
 Ce projet est distribué sous licence MIT.
-Vous êtes libre de l’utiliser, le modifier et le redistribuer à des fins pédagogiques ou personnelles, sous réserve de conserver la mention de l’equipe de développement SOFTMAKERS. 
+Vous êtes libre de l’utiliser, le modifier et le redistribuer à des fins pédagogiques ou personnelles, sous réserve de conserver la mention de l’equipe de développement SOFTMAKERS et l’equipe de recette ABBAH :
+
+- CHEVALIER Héléna
+- FARHAT Fadi
+- HIMBER Sacha
+- NEROT Emeline
+- TIMADJI Jules Andrea
+
 
 
