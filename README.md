@@ -1,4 +1,4 @@
-<h1 align="left">Projet GL02 📊 A25 Sujet B</h1>
+o<h1 align="left">Projet GL02 📊 A25 Sujet B</h1>
 
 ###
 
@@ -134,6 +134,6 @@ Emeline Nerot	#4, #10
 ### Licence
 
 Ce projet est distribué sous licence MIT.
-Vous êtes libre de l’utiliser, le modifier et le redistribuer à des fins pédagogiques ou personnelles, sous réserve de conserver la mention de copyright.
+Vous êtes libre de l’utiliser, le modifier et le redistribuer à des fins pédagogiques ou personnelles, sous réserve de conserver la mention de l’equipe de développement SOFTMAKERS. 
 
 
