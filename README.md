@@ -1,4 +1,4 @@
-o<h1 align="left">Projet GL02 📊 A25 Sujet B</h1>
+<h1 align="left">Projet GL02 📊 A25 Sujet B</h1>
 
 ###
 
