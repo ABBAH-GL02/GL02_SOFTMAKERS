@@ -95,6 +95,7 @@ Une page de login vous demandera de vous connecter :
 ###  Maintenance & suivi des issues
 
 - Fix
+- 
 Issue #1 – Tests Jasmine non effectués
 
 Issue #2 – Gestion des droits conforme au CDC
