@@ -51,6 +51,23 @@ export async function saveExamToDir(content, filename = null, dirName = 'examens
   return outPath;
 }
 
+function displayQuestionsForDeletion(selectedBlocks) {
+  console.log(`\n${'='.repeat(60)}`);
+  console.log(`Questions sélectionnées (${selectedBlocks.length} au total)`);
+  console.log('='.repeat(60));
+
+  selectedBlocks.forEach((block, index) => {
+    try {
+      const parsed = parseGiftQuestion(block);
+      console.log(`${index + 1}) ${parsed.title}`);
+    } catch (e) {
+      console.log(`${index + 1}) [Question non parsable]`);
+    }
+  });
+  
+  console.log('='.repeat(60));
+}
+
 export default async function creerExamen(rl = null) {
   console.log('\n[actions] Création d\'un examen — sélection interactive (Spec_F2)');
 
@@ -211,11 +228,59 @@ export default async function creerExamen(rl = null) {
           selectedSet.add(raw);
         }
       }
-
+      
+      //Ajout de la possibilité de supprimer des questions avant de terminer
       console.log(`\nNombre de questions sélectionnées : ${selectedBlocks.length}`);
+      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer, s=supprimer des questions déjà ajoutées) : \n${blue}votre examen doit avoir entre 15 et 20 questions uniques pour être valide${reset} `);
 
-      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : \n${blue}votre examen doit avoir entre 15 et 20 questions uniques pour être valide${reset} `);
-      if (finish.trim().toLowerCase() === 'y') break;
+      const choice = finish.trim().toLowerCase();
+
+      if (choice === 'y') {
+        break;
+      } else if (choice === 's') { 
+        if (selectedBlocks.length === 0) {
+          console.log(`${colors.yellow}Aucune question à supprimer.${colors.reset}`);
+          continue;
+        }
+
+        displayQuestionsForDeletion(selectedBlocks);
+        
+        const delChoice = await rl.question(
+          '\nNuméro de la question à supprimer (0 pour annuler) : '
+        );
+        
+        if (delChoice.trim() === '0') {
+          console.log('Suppression annulée.');
+          continue;
+        }
+
+        const delIdx = parseInt(delChoice, 10) - 1;
+        
+        if (delIdx >= 0 && delIdx < selectedBlocks.length) {
+          const removed = selectedBlocks[delIdx];
+          selectedBlocks.splice(delIdx, 1);
+          selectedSet.delete(removed);
+          
+          try {
+            const parsed = parseGiftQuestion(removed);
+            console.log(`${colors.green}Question "${parsed.title}" supprimée avec succès.${colors.reset}`);
+          } catch (e) {
+            console.log(`${colors.green}Question supprimée avec succès.${colors.reset}`);
+          }
+          
+          console.log(`Nombre de questions restantes : ${selectedBlocks.length}`);
+        } else {
+          console.log(`${colors.red}Numéro invalide.${colors.reset}`);
+        }
+        
+        continue;
+      } else if (choice === 'n') {
+        continue;
+      } else {
+        console.log(`${colors.yellow}Choix non reconnu, continuation...${colors.reset}`);
+        continue;
+      }
+
     }
 
     try {
