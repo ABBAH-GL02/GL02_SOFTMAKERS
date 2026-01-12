@@ -214,8 +214,24 @@ export default async function creerExamen(rl = null) {
 
       console.log(`\nNombre de questions sélectionnées : ${selectedBlocks.length}`);
 
-      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : \n${blue}votre examen doit avoir entre 15 et 20 questions uniques pour être valide${reset} `);
-      if (finish.trim().toLowerCase() === 'y') break;
+      // Verification du nombre de questions
+      if (selectedBlocks.length < 15) {
+        console.log(`${colors.red}Attention: Il manque ${15 - selectedBlocks.length} question(s) (minimum: 15)${colors.reset}`);
+      } else if (selectedBlocks.length > 20) {
+        console.log(`${colors.red}Attention: Vous avez ${selectedBlocks.length - 20} question(s) en trop (maximum: 20)${colors.reset}`);
+      } else {
+        console.log(`${colors.green}Nombre de questions valide (${selectedBlocks.length}/20)${colors.reset}`);
+      }
+
+      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : `);
+      if (finish.trim().toLowerCase() === 'y') {
+        // Empecher la validation si nombre incorrect
+        if (selectedBlocks.length < 15 || selectedBlocks.length > 20) {
+          console.log(`${colors.red}Impossible de terminer: l'examen doit contenir entre 15 et 20 questions.${colors.reset}`);
+          continue;
+        }
+        break;
+      }
     }
 
     try {
