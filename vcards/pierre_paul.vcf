@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:pierre paul
+N:paul;pierre;;;
+EMAIL;type=HOME:abc@gmail.com
+TEL;VALUE=uri;TYPE="voice,cell":tel:11
+ADR;TYPE=HOME:;;11;11;;/<>**?."" Dupont//><*"?:\,\;.;:''"#
+ROLE:enseignant
+REV:2026-01-08T13:43:09.904Z
+END:VCARD

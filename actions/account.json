@@ -43,5 +43,35 @@
       "region": "Aube",
       "codePostal": "10000"
     }
+  },
+  {
+    "id": "newuser",
+    "password": "1234",
+    "role": "enseignant",
+    "prenom": "GoodName",
+    "nom": "GoodSurname",
+    "email": "email@valid.com",
+    "telephone": "0123456789",
+    "adresse": {
+      "rue": "Rue 1",
+      "ville": "City",
+      "region": "Region",
+      "codePostal": "10000"
+    }
+  },
+  {
+    "id": "prof3",
+    "password": "prof3",
+    "role": "enseignant",
+    "prenom": "pierre",
+    "nom": "paul",
+    "email": "abc@gmail.com",
+    "telephone": "11",
+    "adresse": {
+      "rue": "11",
+      "ville": "11",
+      "region": ":''\"#",
+      "codePostal": "/<>**?.\"\" Dupont//><*\"?:,;."
+    }
   }
 ]

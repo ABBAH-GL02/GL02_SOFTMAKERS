@@ -5,6 +5,7 @@ import fs from "node:fs/promises";
 import vCardJS from "vcards-js";
 import ajoutAccount from "./ajoutAccount.js";
 import { colors } from '../utils/colors.js';
+import { isValidName } from '../utils/validators.js';
 
 export default async function genererVCard(rl = null) {
     console.log("\n[actions] Génération d'un vCard...");
@@ -60,10 +61,17 @@ export default async function genererVCard(rl = null) {
 
         if (!(index >= 0 && index < enseignants.length)) {
             console.log(`${colors.red}Choix invalide.${colors.reset} Tapez 7 pour l'aide (enseignant) ou 3 pour l'aide (étudiant).`);
+            return;
         }
 
         const selected = enseignants[index];
         console.log(`\n Enseignant choisi : ${selected.nom}, ${selected.prenom}`);
+
+        if (!isValidName(selected.nom) || !isValidName(selected.prenom)) {
+            console.error(`${colors.red}Erreur : Le nom ou prénom contient des caractères invalides pour un nom de fichier.${colors.reset}`);
+            console.error("Veuillez corriger les informations de ce compte dans account.json.");
+            return;
+        }
 
         const v = vCardJS();
         v.version = "4.0";
