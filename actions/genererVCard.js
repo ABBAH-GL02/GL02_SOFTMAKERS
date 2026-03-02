@@ -14,7 +14,7 @@ export default async function genererVCard(rl = null) {
         rl = readline.createInterface({ input, output });
         ownRl = true;
     }
-
+    //veferication de l'etat du fichier des comptes
     try {
         const jsonFile = path.join(process.cwd(), "actions", "account.json");
 

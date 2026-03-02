@@ -43,5 +43,20 @@
       "region": "Aube",
       "codePostal": "10000"
     }
+  },
+  {
+    "id": "prof1",
+    "password": "prof1",
+    "role": "enseignant",
+    "prenom": "a",
+    "nom": "a",
+    "email": "a",
+    "telephone": "a",
+    "adresse": {
+      "rue": "a",
+      "ville": "a",
+      "region": "a",
+      "codePostal": "a"
+    }
   }
 ]
