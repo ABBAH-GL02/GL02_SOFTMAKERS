@@ -212,9 +212,38 @@ export default async function creerExamen(rl = null) {
         }
       }
 
-      console.log(`\nNombre de questions sélectionnées : ${selectedBlocks.length}`);
+      // ✅ CORRECTION Issue #15 - Affichage détaillé de la sélection
+      function displaySelection(blocks) {
+        console.log('\n=== SÉLECTION ACTUELLE ===');
+        console.log(`Total : ${blocks.length}/20 questions\n`);
+        
+        if (blocks.length > 0) {
+          console.log('Questions sélectionnées :');
+          blocks.forEach((block, index) => {
+            try {
+              const parsed = parseGiftQuestion(block);
+              console.log(`${index + 1}. ${parsed.title}`);
+            } catch (e) {
+              console.log(`${index + 1}. [Question non parsable]`);
+            }
+          });
+          console.log('');
+        }
 
-      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : \n${blue}votre examen doit avoir entre 15 et 20 questions uniques pour être valide${reset} `);
+        if (blocks.length < 15) {
+          console.log(`${colors.red}⚠️  Il manque encore ${15 - blocks.length} question(s) (minimum: 15)${colors.reset}`);
+        } else if (blocks.length > 20) {
+          console.log(`${colors.red}⚠️  Vous avez ${blocks.length - 20} question(s) en trop (maximum: 20)${colors.reset}`);
+        } else {
+          console.log(`${colors.green}✓ Nombre de questions valide !${colors.reset}`);
+        }
+        
+        console.log('==========================\n');
+      }
+
+      displaySelection(selectedBlocks);
+
+      const finish = await rl.question(`Terminer la création maintenant ? (y=oui, n=continuer) : `);
       if (finish.trim().toLowerCase() === 'y') break;
     }
 
