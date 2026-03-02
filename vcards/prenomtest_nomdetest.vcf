@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:4.0
+FN:prenomtest nomdetest
+N:nomdetest;prenomtest
+EMAIL;type=HOME:test.test@gmail.fr
+TEL;VALUE=uri;TYPE="voice,cell":tel:1234567891
+ADR;TYPE=HOME:12 rue test;Testville;Testregion;12345;France
+ROLE:enseignant
+REV:2025-12-14T20:32:55.797Z
+END:VCARD

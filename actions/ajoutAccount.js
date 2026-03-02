@@ -28,7 +28,8 @@ export default async function ajoutAccount(rl = null) {
         const rue = await rl.question("Rue : ");
         const ville = await rl.question("Ville : ");
         const region = await rl.question("Region : ");
-        const codePostal = await rl.question("Code postal : ");
+        const code_postal = await rl.question("Code postal : ");
+        const pays = await rl.question("pays : ");
 
         const newAccount = {
             id,
@@ -42,7 +43,8 @@ export default async function ajoutAccount(rl = null) {
                 rue,
                 ville,
                 region,
-                codePostal
+                code_postal, //fix cohérence avec le fichier account.json
+                pays
             }
         };
 
