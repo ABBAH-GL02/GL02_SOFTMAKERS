@@ -5,6 +5,7 @@ import path from "node:path";
 import inquirer from "inquirer";
 import ajoutAccount from "./actions/ajoutAccount.js";
 import { colors } from "./utils/colors.js";
+import {checkPassword} from "./actions/passwordManager.js";
 
 export default async function menuLogin(rl = null) {
 
@@ -40,8 +41,12 @@ export default async function menuLogin(rl = null) {
                 const data = await fs.readFile(path.join(process.cwd(), "actions", "account.json"), "utf-8");
                 const enseignants = JSON.parse(data);
 
-                const user = enseignants.find(e => e.id === id && e.password === password.password);
-
+                let user;
+                for (const e of enseignants) {
+                    if (e.id === id && await checkPassword(password.password, e.password)) {
+                        user = e;
+                    }
+                }
 
                 if (user) {
                     console.log(`${colors.green}\nConnexion réussie ! Bienvenue ${user.prenom} ${user.nom}.${colors.reset}`);

@@ -1,7 +1,7 @@
 [
   {
     "id": "pierre",
-    "password": "1234",
+    "password": "$2b$10$I1FEg.qONWiSG8P8AbjM9eplDluAgyIkkxq/dkvkRd.146Zq60dom",
     "role": "enseignant",
     "prenom": "Pierre",
     "nom": "Dupont",
@@ -11,12 +11,12 @@
       "rue": "12 rue Marie Curie",
       "ville": "Troyes",
       "region": "Grand-Est",
-      "code_postal": "10000"
+      "codePostal": "10000"
     }
   },
   {
     "id": "jean",
-    "password": "2345",
+    "password": "$2b$10$uMzzmySq4xaGExeQSV4.CuJBlmOb3n.WoxdyeVsA77n8J07jbPXIO",
     "role": "etudiant",
     "prenom": "Jean",
     "nom": "Dupont",
@@ -26,7 +26,7 @@
       "rue": "13 rue Marie Curie",
       "ville": "Troyes",
       "region": "Grand-Est",
-      "code_postal": "10000"
+      "codePostal": "10000"
     }
   },
   {
