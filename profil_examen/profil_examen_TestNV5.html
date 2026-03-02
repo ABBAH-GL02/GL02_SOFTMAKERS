@@ -19,7 +19,7 @@
     <h1>Profil de l'examen</h1>
     <div class="stat-card">
         <h2>Statistiques Globales</h2>
-        <p><strong>Fichier :</strong> Test 15 questions.gift</p>
+        <p><strong>Fichier :</strong> TestNV5.gift</p>
         <p><strong>Nombre total de questions :</strong> 15</p>
     </div>
 
@@ -28,7 +28,7 @@
     </div>
 
     <script>
-        const spec = {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Profil de l'examen","width":400,"height":300,"data":{"values":[{"type":"Réponse courte","count":8},{"type":"QCM","count":6},{"type":"Association","count":1}]},"mark":"bar","encoding":{"x":{"field":"type","type":"nominal","axis":{"title":"Type de question","labelAngle":-45}},"y":{"field":"count","type":"quantitative","axis":{"title":"Nombre de questions"}},"color":{"field":"type","type":"nominal","scale":{"domain":["Association","Mot manquant","Numérique","Ouverte","QCM","V/F","Réponse courte","Inconnu"],"range":["#4c78a8","#e45756","#59a14f","#eeca3b","#b07aa1","#ff9da7","#76b7b2","#bab0ac"]},"legend":{"title":"Type"}},"tooltip":[{"field":"type","title":"Type"},{"field":"count","title":"Nombre"}]},"title":"Profil de l'examen — Nombre de questions par type"};
+        const spec = {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Profil de l'examen","width":400,"height":300,"data":{"values":[{"type":"QCM","count":14},{"type":"Inconnu","count":1}]},"mark":"bar","encoding":{"x":{"field":"type","type":"nominal","axis":{"title":"Type de question","labelAngle":-45}},"y":{"field":"count","type":"quantitative","axis":{"title":"Nombre de questions"}},"color":{"field":"type","type":"nominal","scale":{"domain":["Association","Mot manquant","Numérique","Ouverte","QCM","V/F","Réponse courte","Inconnu"],"range":["#4c78a8","#e45756","#59a14f","#eeca3b","#b07aa1","#ff9da7","#76b7b2","#bab0ac"]},"legend":{"title":"Type"}},"tooltip":[{"field":"type","title":"Type"},{"field":"count","title":"Nombre"}]},"title":"Profil de l'examen — Nombre de questions par type"};
         vegaEmbed('#vis', spec).then(function(result) {
             // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
         }).catch(console.error);

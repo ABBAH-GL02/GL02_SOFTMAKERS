@@ -35,6 +35,7 @@ export const typeMapping = {
   'matching': 'Association',
   'cloze': 'Mot manquant',
   'text': 'Ouverte',
+  'shortanswer': 'Réponse courte',  
   'unknown': 'Inconnu'
 };
 
@@ -45,5 +46,6 @@ export const colorMapping = {
   'Ouverte': '#eeca3b',
   'QCM': '#b07aa1',
   'V/F': '#ff9da7',
+  'Réponse courte': '#76b7b2', 
   'Inconnu': '#bab0ac'
 };
